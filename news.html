@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News & Updates — NNS Ojo Alumni</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .page-hero { background: linear-gradient(135deg, #001a33 0%, #003366 60%, #004080 100%); padding: 140px 5% 80px; text-align: center; }
+    .page-hero h1 { color: #fff; font-size: clamp(2.2rem,5vw,3.5rem); margin-bottom: 16px; }
+    .page-hero p { color: rgba(255,255,255,0.65); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+    .news-page { padding: 60px 5%; max-width: 1200px; margin: 0 auto; }
+    .news-layout { display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: start; }
+
+    /* Featured article */
+    .featured-article { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 30px; border: 1px solid #e9ecef; transition: all 0.3s; }
+    .featured-article:hover { transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,0.12); }
+    .featured-banner { height: 280px; background: linear-gradient(135deg, #001a33, #003366); display: flex; align-items: center; justify-content: center; font-size: 7rem; position: relative; }
+    .featured-tag { position: absolute; top: 20px; left: 20px; background: #FFD700; color: #001a33; font-size: 0.72rem; font-weight: 700; padding: 5px 14px; border-radius: 50px; letter-spacing: 1px; }
+    .featured-body { padding: 28px; }
+    .featured-body h2 { font-size: 1.5rem; color: #001a33; margin-bottom: 10px; line-height: 1.3; }
+    .featured-body p { color: #6c757d; line-height: 1.7; margin-bottom: 16px; font-size: 0.9rem; }
+    .article-meta { display: flex; gap: 16px; font-size: 0.78rem; color: #6c757d; flex-wrap: wrap; }
+    .article-meta span { display: flex; align-items: center; gap: 5px; }
+
+    /* Article grid */
+    .articles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
+    .article-card { background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid #e9ecef; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s; }
+    .article-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(0,0,0,0.1); }
+    .article-thumb { height: 160px; background: linear-gradient(135deg, #003366, #004080); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; }
+    .article-thumb .a-tag { position: absolute; top: 12px; left: 12px; font-size: 0.68rem; font-weight: 700; padding: 3px 10px; border-radius: 50px; }
+    .tag-announcement { background: rgba(0,51,102,0.9); color: #FFD700; }
+    .tag-spotlight { background: rgba(255,215,0,0.9); color: #001a33; }
+    .tag-project { background: rgba(40,167,69,0.9); color: #fff; }
+    .tag-news { background: rgba(220,53,69,0.9); color: #fff; }
+    .article-body { padding: 18px; }
+    .article-body h3 { font-size: 0.95rem; color: #001a33; margin-bottom: 8px; line-height: 1.4; }
+    .article-body p { font-size: 0.82rem; color: #6c757d; line-height: 1.6; margin-bottom: 12px; }
+    .article-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #6c757d; }
+    .read-more { color: #003366; font-weight: 600; font-size: 0.8rem; }
+
+    /* Sidebar */
+    .news-sidebar { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 90px; }
+    .sidebar-widget { background: #fff; border-radius: 16px; padding: 22px; border: 1px solid #e9ecef; }
+    .sidebar-widget h4 { font-size: 0.85rem; font-weight: 700; color: #001a33; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #FFD700; display: inline-block; }
+
+    .newsletter-form input { width: 100%; padding: 11px 14px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; margin-bottom: 10px; }
+    .newsletter-form input:focus { border-color: #003366; }
+
+    .trending-list { display: flex; flex-direction: column; gap: 14px; }
+    .trending-item { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
+    .trending-num { width: 28px; height: 28px; border-radius: 8px; background: rgba(0,51,102,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #003366; flex-shrink: 0; }
+    .trending-item:hover .trending-num { background: #003366; color: #FFD700; }
+    .trending-title { font-size: 0.82rem; color: #1a1a2e; line-height: 1.4; font-weight: 500; }
+    .trending-date { font-size: 0.72rem; color: #6c757d; margin-top: 3px; }
+
+    .categories-list { display: flex; flex-direction: column; gap: 8px; }
+    .cat-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .cat-item:hover { background: rgba(0,51,102,0.06); }
+    .cat-item span:first-child { font-size: 0.875rem; color: #1a1a2e; }
+    .cat-count { font-size: 0.72rem; background: #e9ecef; color: #6c757d; padding: 2px 8px; border-radius: 50px; }
+
+    @media (max-width: 1000px) { .news-layout { grid-template-columns: 1fr; } .news-sidebar { position: static; } }
+    @media (max-width: 600px) { .articles-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">⚓</div>
+    <div class="nav-title"><span>NNS Ojo Alumni</span><span>Nigerian Navy School</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sets.html">Sets</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="portal.html" class="nav-cta">My Portal</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag" style="background:rgba(255,215,0,0.12);color:#FFD700;border-color:rgba(255,215,0,0.3);">Stay Informed</div>
+  <h1 style="margin-top:16px;">News & Updates</h1>
+  <p>Association announcements, alumni spotlights, school projects, and community news.</p>
+</div>
+
+<div class="news-page">
+  <div class="news-layout">
+    <div>
+      <!-- Featured -->
+      <div class="featured-article fade-up">
+        <div class="featured-banner">📚<div class="featured-tag">⭐ Featured</div></div>
+        <div class="featured-body">
+          <h2>New School Library Project Reaches 60% Funding Target</h2>
+          <p>Thanks to the incredible generosity of our alumni community, the NNS Ojo Library Renovation Project has now reached 60% of its ₦15 million target. The project, championed by the Set '95 cohort, aims to provide a modern, fully equipped library for current students of Nigerian Navy School, Ojo.</p>
+          <div class="article-meta">
+            <span>📅 January 10, 2026</span>
+            <span>✍️ Association Secretariat</span>
+            <span>👁️ 1,240 views</span>
+            <span>💬 34 comments</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articles Grid -->
+      <div class="articles-grid">
+        <div class="article-card fade-up">
+          <div class="article-thumb">🏆<span class="a-tag tag-spotlight">Spotlight</span></div>
+          <div class="article-body">
+            <h3>Set '01 Alumna Dr. Amaka Okonkwo Named Top 40 Under 40 in Medicine</h3>
+            <p>The renowned cardiothoracic surgeon has been recognised by the Nigerian Medical Association for her groundbreaking work at LUTH.</p>
+            <div class="article-footer"><span>📅 Jan 8, 2026</span><span class="read-more">Read more →</span></div>
+          </div>
+        </div>
+        <div class="article-card fade-up">
+          <div class="article-thumb">📢<span class="a-tag tag-announcement">Announcement</span></div>
+          <div class="article-body">
+            <h3>2026 Annual Dues Now Due — Pay Before March 31st</h3>
+            <p>The association reminds all members that the 2026 annual dues of ₦10,000 are now payable. Log in to your portal to pay.</p>
+            <div class="article-footer"><span>📅 Jan 5, 2026</span><span class="read-more">Read more →</span></div>
+          </div>
+        </div>
+        <div class="article-card fade-up">
+          <div class="article-thumb">🏫<span class="a-tag tag-project">Project</span></div>
+          <div class="article-body">
+            <h3>Alumni Donate 20 Computers to NNS Ojo ICT Lab</h3>
+            <p>A joint donation by Sets '95, '98, and 2000 has equipped the school's ICT laboratory with 20 brand new computers.</p>
+            <div class="article-footer"><span>📅 Dec 28, 2025</span><span class="read-more">Read more →</span></div>
+          </div>
+        </div>
+        <div class="article-card fade-up">
+          <div class="article-thumb">🗳️<span class="a-tag tag-announcement">Announcement</span></div>
+          <div class="article-body">
+            <h3>AGM 2026: Call for Nominations for Executive Positions</h3>
+            <p>Nominations are open for the positions of President, Vice President, Secretary, and Treasurer ahead of the March AGM.</p>
+            <div class="article-footer"><span>📅 Dec 20, 2025</span><span class="read-more">Read more →</span></div>
+          </div>
+        </div>
+        <div class="article-card fade-up">
+          <div class="article-thumb">🌍<span class="a-tag tag-news">News</span></div>
+          <div class="article-body">
+            <h3>NNS Ojo Alumni UK Chapter Officially Launched in London</h3>
+            <p>Over 60 alumni based in the United Kingdom gathered in London to formally inaugurate the UK chapter of the association.</p>
+            <div class="article-footer"><span>📅 Dec 15, 2025</span><span class="read-more">Read more →</span></div>
+          </div>
+        </div>
+        <div class="article-card fade-up">
+          <div class="article-thumb">🎓<span class="a-tag tag-spotlight">Spotlight</span></div>
+          <div class="article-body">
+            <h3>Set '88 Pioneer Member Engr. Kola Fashola Honoured Posthumously</h3>
+            <p>The association paid tribute to the late Engr. Kola Fashola at a special memorial service attended by over 200 alumni.</p>
+            <div class="article-footer"><span>📅 Dec 10, 2025</span><span class="read-more">Read more →</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="center-btn fade-up">
+        <button class="btn btn-navy">Load More Articles</button>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="news-sidebar">
+      <div class="sidebar-widget fade-up">
+        <h4>📧 Newsletter</h4>
+        <p style="font-size:0.82rem;color:#6c757d;margin-bottom:14px;line-height:1.6;">Get the latest news and updates delivered to your inbox.</p>
+        <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:12px;">Subscribe →</button>
+        </form>
+      </div>
+
+      <div class="sidebar-widget fade-up">
+        <h4>🔥 Trending</h4>
+        <div class="trending-list">
+          <div class="trending-item">
+            <div class="trending-num">1</div>
+            <div><div class="trending-title">Library Project Reaches 60% Funding</div><div class="trending-date">Jan 10, 2026</div></div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-num">2</div>
+            <div><div class="trending-title">2026 Annual Dues Now Due</div><div class="trending-date">Jan 5, 2026</div></div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-num">3</div>
+            <div><div class="trending-title">UK Chapter Launched in London</div><div class="trending-date">Dec 15, 2025</div></div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-num">4</div>
+            <div><div class="trending-title">AGM 2026: Call for Nominations</div><div class="trending-date">Dec 20, 2025</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-widget fade-up">
+        <h4>📂 Categories</h4>
+        <div class="categories-list">
+          <div class="cat-item"><span>📢 Announcements</span><span class="cat-count">14</span></div>
+          <div class="cat-item"><span>🏆 Alumni Spotlights</span><span class="cat-count">9</span></div>
+          <div class="cat-item"><span>🏫 School Projects</span><span class="cat-count">7</span></div>
+          <div class="cat-item"><span>📅 Events</span><span class="cat-count">11</span></div>
+          <div class="cat-item"><span>🌍 Diaspora</span><span class="cat-count">5</span></div>
+          <div class="cat-item"><span>🕯️ In Memoriam</span><span class="cat-count">4</span></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer style="background:#001a33;color:rgba(255,255,255,0.5);text-align:center;padding:30px;font-size:0.85rem;margin-top:40px;">
+  © 2026 NNS Ojo Alumni Association &nbsp;·&nbsp; <a href="index.html" style="color:#FFD700;">Back to Home</a>
+</footer>
+
+<script src="js/animations.js"></script>
+<script>
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✅ Subscribed!';
+    btn.style.background = '#28a745';
+    setTimeout(() => { btn.textContent = 'Subscribe →'; btn.style.background = ''; }, 3000);
+  }
+</script>
+</body>
+</html>

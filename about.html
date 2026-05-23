@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — NNS Ojo Alumni</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .page-hero { background: linear-gradient(135deg, #001a33 0%, #003366 60%, #004080 100%); padding: 140px 5% 80px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero h1 { color: #fff; font-size: clamp(2.2rem,5vw,3.5rem); margin-bottom: 16px; }
+    .page-hero p { color: rgba(255,255,255,0.65); font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+
+    .about-page { max-width: 1100px; margin: 0 auto; padding: 0 5%; }
+
+    /* Mission section */
+    .mission-section { padding: 100px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .mission-text h2 { font-size: clamp(1.8rem,3.5vw,2.6rem); color: #001a33; margin-bottom: 20px; line-height: 1.2; }
+    .mission-text p { color: #6c757d; line-height: 1.8; margin-bottom: 16px; font-size: 0.95rem; }
+    .mission-values { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+    .value-item { display: flex; gap: 14px; align-items: flex-start; }
+    .value-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(0,51,102,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .value-text h4 { font-size: 0.9rem; color: #001a33; margin-bottom: 4px; }
+    .value-text p { font-size: 0.82rem; color: #6c757d; line-height: 1.5; margin: 0; }
+    .mission-visual { background: linear-gradient(135deg, #003366, #004080); border-radius: 20px; height: 420px; display: flex; align-items: center; justify-content: center; font-size: 8rem; box-shadow: 0 20px 60px rgba(0,51,102,0.3); position: relative; }
+    .mission-visual .year-badge { position: absolute; bottom: -20px; left: -20px; background: #FFD700; border-radius: 16px; padding: 18px 22px; box-shadow: 0 10px 30px rgba(255,215,0,0.4); }
+    .mission-visual .year-badge .yr { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: #001a33; line-height: 1; }
+    .mission-visual .year-badge .yr-label { font-size: 0.68rem; color: #001a33; font-weight: 700; letter-spacing: 1px; }
+
+    /* Timeline */
+    .timeline-section { padding: 80px 0; background: #fff; margin: 0 -5%; padding-left: 5%; padding-right: 5%; }
+    .timeline-section h2 { text-align: center; font-size: clamp(1.8rem,3.5vw,2.6rem); color: #001a33; margin-bottom: 60px; }
+    .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(#FFD700, #003366); transform: translateX(-50%); }
+    .timeline-item { display: flex; gap: 40px; margin-bottom: 50px; align-items: flex-start; }
+    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+    .timeline-content { flex: 1; background: #f8f9fa; border-radius: 16px; padding: 22px; border: 1px solid #e9ecef; position: relative; }
+    .timeline-content::after { content: ''; position: absolute; top: 20px; width: 12px; height: 12px; background: #FFD700; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 2px #FFD700; }
+    .timeline-item:nth-child(odd) .timeline-content::after { right: -46px; }
+    .timeline-item:nth-child(even) .timeline-content::after { left: -46px; }
+    .timeline-year { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: #FFD700; background: #003366; padding: 8px 16px; border-radius: 50px; white-space: nowrap; align-self: flex-start; margin-top: 14px; }
+    .timeline-content h3 { font-size: 1rem; color: #001a33; margin-bottom: 8px; }
+    .timeline-content p { font-size: 0.85rem; color: #6c757d; line-height: 1.6; margin: 0; }
+
+    /* Leadership */
+    .leadership-section { padding: 100px 0; }
+    .leadership-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .leader-card { background: #fff; border-radius: 16px; padding: 28px; text-align: center; border: 1px solid #e9ecef; box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: all 0.3s; }
+    .leader-card:hover { transform: translateY(-6px); box-shadow: 0 16px 45px rgba(0,0,0,0.12); }
+    .leader-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #003366, #004080); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 16px; border: 3px solid #FFD700; }
+    .leader-card h3 { font-size: 1rem; color: #001a33; margin-bottom: 4px; }
+    .leader-role { font-size: 0.75rem; color: #cc9900; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .leader-set { font-size: 0.78rem; color: #6c757d; }
+
+    /* Mission cards */
+    .mission-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 80px 0; }
+    .mission-card { background: linear-gradient(135deg, #001a33, #003366); border-radius: 16px; padding: 32px 24px; text-align: center; }
+    .mission-card .m-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .mission-card h3 { color: #FFD700; font-size: 1.1rem; margin-bottom: 10px; }
+    .mission-card p { color: rgba(255,255,255,0.65); font-size: 0.85rem; line-height: 1.6; }
+
+    @media (max-width: 900px) {
+      .mission-section { grid-template-columns: 1fr; }
+      .timeline::before { left: 20px; }
+      .timeline-item, .timeline-item:nth-child(even) { flex-direction: column; padding-left: 50px; }
+      .timeline-content::after, .timeline-item:nth-child(even) .timeline-content::after { left: -36px; right: auto; }
+      .timeline-year { align-self: auto; }
+      .leadership-grid { grid-template-columns: repeat(2, 1fr); }
+      .mission-cards { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) { .leadership-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">⚓</div>
+    <div class="nav-title"><span>NNS Ojo Alumni</span><span>Nigerian Navy School</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sets.html">Sets</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="portal.html" class="nav-cta">My Portal</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag" style="background:rgba(255,215,0,0.12);color:#FFD700;border-color:rgba(255,215,0,0.3);">Founded 1982</div>
+  <h1 style="margin-top:16px;">About Our Association</h1>
+  <p>The story of Nigerian Navy School, Ojo — and the brotherhood that has endured for over four decades.</p>
+</div>
+
+<div class="about-page">
+
+  <!-- Mission -->
+  <div class="mission-section">
+    <div class="mission-text fade-up">
+      <div class="section-tag">Our Mission</div>
+      <h2>A Brotherhood Forged in Discipline & Excellence</h2>
+      <p>Nigerian Navy School, Ojo was established in 1982 to provide quality secondary education for children of Nigerian Navy personnel and the general public. The school produced its first set of alumni in 1988 — and that pioneer class laid the foundation for a legacy that has only grown stronger with each passing year.</p>
+      <p>The NNS Ojo Alumni Association exists to keep that bond alive — connecting old students across generations, supporting the school, and empowering our members to thrive.</p>
+      <div class="mission-values">
+        <div class="value-item">
+          <div class="value-icon">🤝</div>
+          <div class="value-text"><h4>Brotherhood</h4><p>Fostering lifelong connections among all old students regardless of set or background.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🏫</div>
+          <div class="value-text"><h4>School Development</h4><p>Giving back to NNS Ojo through infrastructure, scholarships, and mentorship programmes.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🌟</div>
+          <div class="value-text"><h4>Member Empowerment</h4><p>Creating opportunities for career growth, networking, and community impact.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up" style="position:relative;">
+      <div class="mission-visual">⚓
+        <div class="year-badge">
+          <div class="yr">1982</div>
+          <div class="yr-label">SCHOOL FOUNDED</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Mission Cards (full width) -->
+<div style="background:#f8f9fa; padding:0 5%;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div class="mission-cards">
+      <div class="mission-card fade-up">
+        <div class="m-icon">🎯</div>
+        <h3>Our Vision</h3>
+        <p>To be the most impactful alumni association in Nigeria — a model of unity, excellence, and service to alma mater and nation.</p>
+      </div>
+      <div class="mission-card fade-up">
+        <div class="m-icon">📜</div>
+        <h3>Our Mission</h3>
+        <p>To connect, empower, and mobilise NNS Ojo alumni for the development of our school, our members, and our communities.</p>
+      </div>
+      <div class="mission-card fade-up">
+        <div class="m-icon">⚓</div>
+        <h3>Our Values</h3>
+        <p>Integrity, discipline, brotherhood, excellence, and service — the same values NNS Ojo instilled in us from day one.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Timeline -->
+<div class="timeline-section">
+  <div class="section-header fade-up">
+    <div class="section-tag">Our History</div>
+    <h2>Key Milestones</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item fade-up">
+      <div class="timeline-year">1982</div>
+      <div class="timeline-content">
+        <h3>School Founded</h3>
+        <p>Nigerian Navy School, Ojo is established in Ojo, Lagos State, to provide quality education for children of naval personnel and the public.</p>
+      </div>
+    </div>
+    <div class="timeline-item fade-up">
+      <div class="timeline-year">1988</div>
+      <div class="timeline-content">
+        <h3>Pioneer Set Graduates</h3>
+        <p>The first set of students completes their secondary education, marking the birth of the NNS Ojo alumni community.</p>
+      </div>
+    </div>
+    <div class="timeline-item fade-up">
+      <div class="timeline-year">1995</div>
+      <div class="timeline-content">
+        <h3>Alumni Association Formally Constituted</h3>
+        <p>Old students formally establish the NNS Ojo Alumni Association with a constitution, elected executives, and a registered office.</p>
+      </div>
+    </div>
+    <div class="timeline-item fade-up">
+      <div class="timeline-year">2005</div>
+      <div class="timeline-content">
+        <h3>First Major Donation to School</h3>
+        <p>The association donates a fully equipped science laboratory to NNS Ojo, the first of many infrastructure contributions to the school.</p>
+      </div>
+    </div>
+    <div class="timeline-item fade-up">
+      <div class="timeline-year">2015</div>
+      <div class="timeline-content">
+        <h3>Scholarship Fund Established</h3>
+        <p>The NNS Ojo Alumni Scholarship Fund is launched, providing annual bursaries to outstanding current students from underprivileged backgrounds.</p>
+      </div>
+    </div>
+    <div class="timeline-item fade-up">
+      <div class="timeline-year">2023</div>
+      <div class="timeline-content">
+        <h3>UK & USA Diaspora Chapters Launched</h3>
+        <p>International chapters are formally inaugurated in London and Houston, extending the association's reach to the global diaspora.</p>
+      </div>
+    </div>
+    <div class="timeline-item fade-up">
+      <div class="timeline-year">2026</div>
+      <div class="timeline-content">
+        <h3>This Website Launches</h3>
+        <p>The official NNS Ojo Alumni digital platform goes live — connecting all sets, enabling dues payment, donations, and community engagement online.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="about-page">
+  <!-- Leadership -->
+  <div class="leadership-section">
+    <div class="section-header fade-up">
+      <div class="section-tag">Leadership</div>
+      <h2>Executive Committee 2024–2026</h2>
+      <p>Elected at the 2024 AGM to serve the association for a two-year term.</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="leadership-grid">
+      <div class="leader-card fade-up">
+        <div class="leader-avatar">👨✈️</div>
+        <h3>Cdre. Babatunde Adeyemi (Rtd.)</h3>
+        <div class="leader-role">President</div>
+        <div class="leader-set">Set 1992</div>
+      </div>
+      <div class="leader-card fade-up">
+        <div class="leader-avatar">👩💼</div>
+        <h3>Mrs. Ngozi Okafor-Eze</h3>
+        <div class="leader-role">Vice President</div>
+        <div class="leader-set">Set 1996</div>
+      </div>
+      <div class="leader-card fade-up">
+        <div class="leader-avatar">👨🔬</div>
+        <h3>Dr. Emeka Nwosu</h3>
+        <div class="leader-role">General Secretary</div>
+        <div class="leader-set">Set 1999</div>
+      </div>
+      <div class="leader-card fade-up">
+        <div class="leader-avatar">👩⚖️</div>
+        <h3>Barr. Chidinma Obi</h3>
+        <div class="leader-role">Financial Secretary</div>
+        <div class="leader-set">Set 2001</div>
+      </div>
+      <div class="leader-card fade-up">
+        <div class="leader-avatar">👨💻</div>
+        <h3>Engr. Seun Fashola</h3>
+        <div class="leader-role">Publicity Secretary</div>
+        <div class="leader-set">Set 2003</div>
+      </div>
+      <div class="leader-card fade-up">
+        <div class="leader-avatar">👩🏫</div>
+        <h3>Prof. Amaka Aliyu</h3>
+        <div class="leader-role">Welfare Officer</div>
+        <div class="leader-set">Set 1998</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#001a33;color:rgba(255,255,255,0.5);text-align:center;padding:30px;font-size:0.85rem;">
+  © 2026 NNS Ojo Alumni Association &nbsp;·&nbsp; <a href="index.html" style="color:#FFD700;">Back to Home</a>
+</footer>
+
+<script src="js/animations.js"></script>
+</body>
+</html>

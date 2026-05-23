@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal — NNS Ojo Alumni</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .page-hero { background: linear-gradient(135deg, #001a33 0%, #003366 60%, #004080 100%); padding: 140px 5% 80px; text-align: center; }
+    .page-hero h1 { color: #fff; font-size: clamp(2rem,4vw,3rem); margin-bottom: 16px; }
+    .page-hero p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 520px; margin: 0 auto; }
+
+    .legal-page { max-width: 900px; margin: 0 auto; padding: 80px 5%; }
+    .legal-tabs { display: flex; gap: 8px; margin-bottom: 40px; }
+    .legal-tab { padding: 11px 24px; border-radius: 50px; border: 2px solid #e9ecef; background: #fff; font-size: 0.875rem; font-weight: 600; color: #003366; cursor: pointer; transition: all 0.3s; }
+    .legal-tab.active { background: #003366; border-color: #003366; color: #FFD700; }
+
+    .legal-doc { display: none; }
+    .legal-doc.active { display: block; }
+
+    .legal-doc h2 { font-size: 1.6rem; color: #001a33; margin-bottom: 8px; }
+    .legal-doc .last-updated { font-size: 0.82rem; color: #6c757d; margin-bottom: 36px; }
+    .legal-doc h3 { font-size: 1rem; color: #001a33; margin: 28px 0 10px; }
+    .legal-doc p { font-size: 0.9rem; color: #6c757d; line-height: 1.8; margin-bottom: 14px; }
+    .legal-doc ul { padding-left: 20px; margin-bottom: 14px; }
+    .legal-doc ul li { font-size: 0.9rem; color: #6c757d; line-height: 1.8; margin-bottom: 6px; }
+    .legal-doc a { color: #003366; font-weight: 600; }
+    .legal-divider { height: 1px; background: #e9ecef; margin: 24px 0; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">⚓</div>
+    <div class="nav-title"><span>NNS Ojo Alumni</span><span>Nigerian Navy School</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sets.html">Sets</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="portal.html" class="nav-cta">My Portal</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <h1>Legal Information</h1>
+  <p>Our Privacy Policy and Terms of Use — your rights and our commitments.</p>
+</div>
+
+<div class="legal-page">
+  <div class="legal-tabs">
+    <button class="legal-tab active" onclick="switchLegal('privacy')">Privacy Policy</button>
+    <button class="legal-tab" onclick="switchLegal('terms')">Terms of Use</button>
+  </div>
+
+  <!-- PRIVACY POLICY -->
+  <div class="legal-doc active" id="privacy">
+    <h2>Privacy Policy</h2>
+    <p class="last-updated">Last updated: January 1, 2026</p>
+
+    <p>The NNS Ojo Alumni Association ("we", "us", "our") is committed to protecting the privacy of our members and website visitors. This Privacy Policy explains how we collect, use, and safeguard your personal information.</p>
+
+    <h3>1. Information We Collect</h3>
+    <p>When you register or use our platform, we may collect the following information:</p>
+    <ul>
+      <li>Full name, email address, phone number, and date of birth</li>
+      <li>Graduation set year and school-related information</li>
+      <li>Current location, occupation, and employer</li>
+      <li>Payment information (processed securely via Paystack — we do not store card details)</li>
+      <li>Profile photo and biographical information you choose to provide</li>
+      <li>Usage data such as pages visited and features used</li>
+    </ul>
+
+    <h3>2. How We Use Your Information</h3>
+    <ul>
+      <li>To create and manage your alumni membership account</li>
+      <li>To process dues payments and donations</li>
+      <li>To send you event invitations, newsletters, and association announcements</li>
+      <li>To display your profile in the alumni directory (subject to your privacy settings)</li>
+      <li>To improve our website and services</li>
+      <li>To comply with legal obligations</li>
+    </ul>
+
+    <h3>3. Data Sharing</h3>
+    <p>We do not sell, rent, or trade your personal information to third parties. We may share data with:</p>
+    <ul>
+      <li>Paystack (our payment processor) — for processing dues and donations</li>
+      <li>Email service providers — for sending newsletters and notifications</li>
+      <li>Other alumni members — only the information you choose to make visible in your profile settings</li>
+    </ul>
+
+    <h3>4. Data Security</h3>
+    <p>We implement industry-standard security measures to protect your data, including SSL encryption, secure password hashing, and access controls. However, no method of transmission over the internet is 100% secure.</p>
+
+    <h3>5. Your Rights</h3>
+    <p>You have the right to access, correct, or delete your personal data at any time. You may also opt out of marketing communications. To exercise these rights, contact us at <a href="mailto:privacy@nnsojoalumni.org">privacy@nnsojoalumni.org</a>.</p>
+
+    <h3>6. Cookies</h3>
+    <p>We use cookies to maintain your login session and improve your browsing experience. You can disable cookies in your browser settings, though this may affect site functionality.</p>
+
+    <h3>7. Contact</h3>
+    <p>For privacy-related enquiries, contact our Data Protection Officer at <a href="mailto:privacy@nnsojoalumni.org">privacy@nnsojoalumni.org</a>.</p>
+  </div>
+
+  <!-- TERMS OF USE -->
+  <div class="legal-doc" id="terms">
+    <h2>Terms of Use</h2>
+    <p class="last-updated">Last updated: January 1, 2026</p>
+
+    <p>By accessing or using the NNS Ojo Alumni Association website and member portal, you agree to be bound by these Terms of Use. Please read them carefully.</p>
+
+    <h3>1. Eligibility</h3>
+    <p>Membership is open to all former students of Nigerian Navy School, Ojo who graduated from 1988 onwards. Registration is subject to verification by the association secretariat.</p>
+
+    <h3>2. Member Responsibilities</h3>
+    <ul>
+      <li>Provide accurate and truthful information during registration</li>
+      <li>Keep your login credentials confidential and secure</li>
+      <li>Use the platform respectfully and in accordance with the association's values</li>
+      <li>Not post false, defamatory, or offensive content</li>
+      <li>Not use the platform for commercial solicitation without prior approval</li>
+      <li>Pay annual dues as required to maintain active membership status</li>
+    </ul>
+
+    <h3>3. Payments & Refunds</h3>
+    <p>All dues and donation payments are processed via Paystack and are non-refundable unless there is a verified error in processing. Disputed transactions should be reported to the secretariat within 14 days.</p>
+
+    <h3>4. Content</h3>
+    <p>By posting content (profile information, job listings, comments) on the platform, you grant the association a non-exclusive licence to display that content. You retain ownership of your content. The association reserves the right to remove content that violates these terms.</p>
+
+    <h3>5. Job Board</h3>
+    <p>Job listings are posted by alumni members and are not verified by the association. We are not responsible for the accuracy of job postings or the outcome of any application. Users apply at their own risk.</p>
+
+    <h3>6. Account Suspension</h3>
+    <p>The association reserves the right to suspend or terminate accounts that violate these terms, engage in misconduct, or bring the association into disrepute.</p>
+
+    <h3>7. Limitation of Liability</h3>
+    <p>The NNS Ojo Alumni Association is not liable for any indirect, incidental, or consequential damages arising from your use of this platform.</p>
+
+    <h3>8. Changes to Terms</h3>
+    <p>We may update these terms from time to time. Continued use of the platform after changes constitutes acceptance of the new terms.</p>
+
+    <h3>9. Governing Law</h3>
+    <p>These terms are governed by the laws of the Federal Republic of Nigeria.</p>
+
+    <h3>10. Contact</h3>
+    <p>For questions about these terms, contact us at <a href="mailto:legal@nnsojoalumni.org">legal@nnsojoalumni.org</a> or visit our <a href="contact.html">Contact page</a>.</p>
+  </div>
+</div>
+
+<footer style="background:#001a33;color:rgba(255,255,255,0.5);text-align:center;padding:30px;font-size:0.85rem;">
+  © 2026 NNS Ojo Alumni Association &nbsp;·&nbsp; <a href="index.html" style="color:#FFD700;">Back to Home</a>
+</footer>
+
+<script src="js/animations.js"></script>
+<script>
+  function switchLegal(tab) {
+    document.querySelectorAll('.legal-tab').forEach((t, i) => t.classList.toggle('active', (i === 0) === (tab === 'privacy')));
+    document.getElementById('privacy').classList.toggle('active', tab === 'privacy');
+    document.getElementById('terms').classList.toggle('active', tab === 'terms');
+  }
+</script>
+</body>
+</html>

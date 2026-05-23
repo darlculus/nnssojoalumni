@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Board — NNS Ojo Alumni</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .page-hero { background: linear-gradient(135deg, #001a33 0%, #003366 60%, #004080 100%); padding: 140px 5% 80px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero h1 { color: #fff; font-size: clamp(2.2rem,5vw,3.5rem); margin-bottom: 16px; }
+    .page-hero p { color: rgba(255,255,255,0.65); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+    .jobs-page { padding: 60px 5%; max-width: 1200px; margin: 0 auto; }
+
+    .jobs-layout { display: grid; grid-template-columns: 280px 1fr; gap: 30px; align-items: start; }
+
+    /* Filters sidebar */
+    .filters-panel { background: #fff; border-radius: 16px; padding: 24px; border: 1px solid #e9ecef; position: sticky; top: 90px; }
+    .filters-panel h3 { font-size: 0.95rem; color: #001a33; margin-bottom: 20px; }
+    .filter-group { margin-bottom: 22px; }
+    .filter-group label { display: block; font-size: 0.75rem; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+    .filter-check { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; color: #1a1a2e; margin-bottom: 8px; cursor: pointer; }
+    .filter-check input { width: auto; cursor: pointer; }
+    .filter-check .count { margin-left: auto; font-size: 0.72rem; background: #e9ecef; color: #6c757d; padding: 2px 8px; border-radius: 50px; }
+
+    /* Search bar */
+    .jobs-search { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .jobs-search input { flex: 1; min-width: 200px; padding: 13px 20px; border: 2px solid #e9ecef; border-radius: 50px; font-size: 0.9rem; font-family: 'Inter', sans-serif; outline: none; transition: all 0.3s; }
+    .jobs-search input:focus { border-color: #003366; }
+    .jobs-search select { padding: 13px 20px; border: 2px solid #e9ecef; border-radius: 50px; font-size: 0.875rem; font-family: 'Inter', sans-serif; outline: none; background: #fff; cursor: pointer; }
+
+    /* Job cards */
+    .jobs-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .job-card { background: #fff; border-radius: 16px; padding: 24px; border: 2px solid #e9ecef; transition: all 0.3s; cursor: pointer; display: flex; gap: 20px; align-items: flex-start; }
+    .job-card:hover { border-color: #003366; box-shadow: 0 8px 30px rgba(0,51,102,0.12); transform: translateY(-2px); }
+    .job-card.featured { border-color: #FFD700; background: linear-gradient(135deg, #fffdf0, #fff); }
+
+    .job-logo { width: 56px; height: 56px; border-radius: 12px; background: linear-gradient(135deg, #003366, #004080); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+
+    .job-body { flex: 1; }
+    .job-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+    .job-top h3 { font-size: 1rem; color: #001a33; }
+    .job-salary { font-size: 0.875rem; font-weight: 700; color: #28a745; white-space: nowrap; }
+
+    .job-company { font-size: 0.82rem; color: #003366; font-weight: 600; margin-bottom: 10px; }
+
+    .job-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .job-tag { font-size: 0.72rem; font-weight: 600; padding: 4px 12px; border-radius: 50px; }
+    .tag-type { background: rgba(0,51,102,0.08); color: #003366; }
+    .tag-location { background: rgba(40,167,69,0.1); color: #28a745; }
+    .tag-sector { background: rgba(255,215,0,0.15); color: #856404; }
+    .tag-featured { background: #FFD700; color: #001a33; }
+
+    .job-desc { font-size: 0.85rem; color: #6c757d; line-height: 1.6; margin-bottom: 14px; }
+
+    .job-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .job-meta { display: flex; gap: 16px; font-size: 0.78rem; color: #6c757d; }
+    .job-meta span { display: flex; align-items: center; gap: 5px; }
+
+    .post-job-banner { background: linear-gradient(135deg, #001a33, #003366); border-radius: 16px; padding: 32px; text-align: center; margin-bottom: 30px; }
+    .post-job-banner h3 { color: #fff; font-size: 1.2rem; margin-bottom: 8px; }
+    .post-job-banner p { color: rgba(255,255,255,0.6); font-size: 0.875rem; margin-bottom: 20px; }
+
+    @media (max-width: 900px) { .jobs-layout { grid-template-columns: 1fr; } .filters-panel { position: static; } }
+    @media (max-width: 600px) { .job-card { flex-direction: column; } }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">⚓</div>
+    <div class="nav-title"><span>NNS Ojo Alumni</span><span>Nigerian Navy School</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sets.html">Sets</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="portal.html" class="nav-cta">My Portal</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag" style="background:rgba(255,215,0,0.12);color:#FFD700;border-color:rgba(255,215,0,0.3);">Alumni Network</div>
+  <h1 style="margin-top:16px;">Job Board</h1>
+  <p>Opportunities posted by and for NNS Ojo alumni. Hire from the family. Grow within the family.</p>
+</div>
+
+<div class="jobs-page">
+  <div class="post-job-banner fade-up">
+    <h3>💼 Have a vacancy? Post it here.</h3>
+    <p>Reach thousands of qualified NNS Ojo alumni across Nigeria and the diaspora.</p>
+    <button class="btn btn-gold" onclick="document.getElementById('post-job-modal').classList.add('open')">Post a Job — Free for Alumni</button>
+  </div>
+
+  <div class="jobs-search">
+    <input type="text" id="job-search" placeholder="🔍  Search job title, company, or keyword..." />
+    <select id="job-sort">
+      <option>Most Recent</option>
+      <option>Highest Salary</option>
+      <option>Most Relevant</option>
+    </select>
+  </div>
+
+  <div class="jobs-layout">
+    <!-- Filters -->
+    <aside class="filters-panel fade-up">
+      <h3>🔧 Filter Jobs</h3>
+      <div class="filter-group">
+        <label>Job Type</label>
+        <label class="filter-check"><input type="checkbox" checked /> Full-time <span class="count">12</span></label>
+        <label class="filter-check"><input type="checkbox" checked /> Part-time <span class="count">4</span></label>
+        <label class="filter-check"><input type="checkbox" /> Contract <span class="count">7</span></label>
+        <label class="filter-check"><input type="checkbox" /> Remote <span class="count">9</span></label>
+        <label class="filter-check"><input type="checkbox" /> Internship <span class="count">3</span></label>
+      </div>
+      <div class="filter-group">
+        <label>Location</label>
+        <label class="filter-check"><input type="checkbox" checked /> Lagos <span class="count">14</span></label>
+        <label class="filter-check"><input type="checkbox" /> Abuja <span class="count">8</span></label>
+        <label class="filter-check"><input type="checkbox" /> Port Harcourt <span class="count">5</span></label>
+        <label class="filter-check"><input type="checkbox" /> Abroad <span class="count">6</span></label>
+      </div>
+      <div class="filter-group">
+        <label>Sector</label>
+        <label class="filter-check"><input type="checkbox" checked /> Oil & Gas <span class="count">6</span></label>
+        <label class="filter-check"><input type="checkbox" checked /> Finance <span class="count">8</span></label>
+        <label class="filter-check"><input type="checkbox" /> Technology <span class="count">9</span></label>
+        <label class="filter-check"><input type="checkbox" /> Healthcare <span class="count">4</span></label>
+        <label class="filter-check"><input type="checkbox" /> Legal <span class="count">3</span></label>
+        <label class="filter-check"><input type="checkbox" /> Education <span class="count">4</span></label>
+      </div>
+      <button class="btn btn-navy" style="width:100%;justify-content:center;padding:12px;">Apply Filters</button>
+    </aside>
+
+    <!-- Job Listings -->
+    <div class="jobs-list" id="jobs-list">
+
+      <div class="job-card featured fade-up">
+        <div class="job-logo">🏦</div>
+        <div class="job-body">
+          <div class="job-top">
+            <h3>Head of Risk Management</h3>
+            <div class="job-salary">₦18M – ₦24M / yr</div>
+          </div>
+          <div class="job-company">First Continental Bank · Lagos</div>
+          <div class="job-tags">
+            <span class="job-tag tag-featured">⭐ Featured</span>
+            <span class="job-tag tag-type">Full-time</span>
+            <span class="job-tag tag-location">📍 Lagos</span>
+            <span class="job-tag tag-sector">Finance</span>
+          </div>
+          <p class="job-desc">Leading risk assessment and mitigation strategies for a top-tier commercial bank. Minimum 10 years experience in financial risk management required.</p>
+          <div class="job-footer">
+            <div class="job-meta">
+              <span>👤 Posted by Set '95 Alumni</span>
+              <span>🕐 2 days ago</span>
+              <span>👥 12 applicants</span>
+            </div>
+            <a href="login.html" class="btn btn-gold" style="padding:10px 20px;font-size:0.82rem;">Apply Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-card fade-up">
+        <div class="job-logo">⚡</div>
+        <div class="job-body">
+          <div class="job-top">
+            <h3>Senior Electrical Engineer</h3>
+            <div class="job-salary">₦9M – ₦14M / yr</div>
+          </div>
+          <div class="job-company">Adeyemi Energy Group · Port Harcourt</div>
+          <div class="job-tags">
+            <span class="job-tag tag-type">Full-time</span>
+            <span class="job-tag tag-location">📍 Port Harcourt</span>
+            <span class="job-tag tag-sector">Oil & Gas</span>
+          </div>
+          <p class="job-desc">Oversee electrical systems design and maintenance for offshore platforms. COREN registration required. Preference for NNS Ojo alumni.</p>
+          <div class="job-footer">
+            <div class="job-meta">
+              <span>👤 Posted by Set '98 Alumni</span>
+              <span>🕐 5 days ago</span>
+              <span>👥 8 applicants</span>
+            </div>
+            <a href="login.html" class="btn btn-navy" style="padding:10px 20px;font-size:0.82rem;">Apply Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-card fade-up">
+        <div class="job-logo">💻</div>
+        <div class="job-body">
+          <div class="job-top">
+            <h3>Full Stack Developer</h3>
+            <div class="job-salary">₦6M – ₦10M / yr</div>
+          </div>
+          <div class="job-company">TechBridge Nigeria · Remote</div>
+          <div class="job-tags">
+            <span class="job-tag tag-type">Remote</span>
+            <span class="job-tag tag-location">🌍 Remote</span>
+            <span class="job-tag tag-sector">Technology</span>
+          </div>
+          <p class="job-desc">Build and maintain web applications using React and Node.js. 3+ years experience required. Flexible hours, fully remote position.</p>
+          <div class="job-footer">
+            <div class="job-meta">
+              <span>👤 Posted by Set '03 Alumni</span>
+              <span>🕐 1 week ago</span>
+              <span>👥 21 applicants</span>
+            </div>
+            <a href="login.html" class="btn btn-navy" style="padding:10px 20px;font-size:0.82rem;">Apply Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-card fade-up">
+        <div class="job-logo">⚕️</div>
+        <div class="job-body">
+          <div class="job-top">
+            <h3>Consultant Physician</h3>
+            <div class="job-salary">₦12M – ₦18M / yr</div>
+          </div>
+          <div class="job-company">Okonkwo Medical Centre · Abuja</div>
+          <div class="job-tags">
+            <span class="job-tag tag-type">Full-time</span>
+            <span class="job-tag tag-location">📍 Abuja</span>
+            <span class="job-tag tag-sector">Healthcare</span>
+          </div>
+          <p class="job-desc">Seeking an experienced consultant physician for a growing private hospital. MDCN registration mandatory. Competitive package with housing allowance.</p>
+          <div class="job-footer">
+            <div class="job-meta">
+              <span>👤 Posted by Set '01 Alumni</span>
+              <span>🕐 3 days ago</span>
+              <span>👥 5 applicants</span>
+            </div>
+            <a href="login.html" class="btn btn-navy" style="padding:10px 20px;font-size:0.82rem;">Apply Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-card fade-up">
+        <div class="job-logo">⚖️</div>
+        <div class="job-body">
+          <div class="job-top">
+            <h3>Senior Legal Counsel</h3>
+            <div class="job-salary">₦10M – ₦15M / yr</div>
+          </div>
+          <div class="job-company">Nwosu & Associates · Lagos</div>
+          <div class="job-tags">
+            <span class="job-tag tag-type">Full-time</span>
+            <span class="job-tag tag-location">📍 Lagos</span>
+            <span class="job-tag tag-sector">Legal</span>
+          </div>
+          <p class="job-desc">Corporate and commercial law practice. Minimum 7 years post-call experience. Expertise in mergers, acquisitions, and regulatory compliance preferred.</p>
+          <div class="job-footer">
+            <div class="job-meta">
+              <span>👤 Posted by Set '96 Alumni</span>
+              <span>🕐 4 days ago</span>
+              <span>👥 9 applicants</span>
+            </div>
+            <a href="login.html" class="btn btn-navy" style="padding:10px 20px;font-size:0.82rem;">Apply Now →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- POST JOB MODAL -->
+<div class="modal-overlay" id="post-job-modal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <h3>💼 Post a Job</h3>
+      <button class="modal-close" onclick="document.getElementById('post-job-modal').classList.remove('open')">✕</button>
+    </div>
+    <form onsubmit="submitJob(event)" style="display:flex;flex-direction:column;gap:14px;">
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Job Title</label><input type="text" placeholder="e.g. Senior Software Engineer" required style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;" /></div>
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Company Name</label><input type="text" placeholder="Your company" required style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;" /></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Job Type</label><select style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;background:#fff;"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Remote</option></select></div>
+        <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Location</label><input type="text" placeholder="Lagos / Remote" style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;" /></div>
+      </div>
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Salary Range (optional)</label><input type="text" placeholder="e.g. ₦6M – ₦10M / yr" style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;" /></div>
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Job Description</label><textarea placeholder="Describe the role, requirements, and how to apply..." required style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;min-height:100px;resize:vertical;"></textarea></div>
+      <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;">Submit Job Post →</button>
+    </form>
+  </div>
+</div>
+
+<footer style="background:#001a33;color:rgba(255,255,255,0.5);text-align:center;padding:30px;font-size:0.85rem;margin-top:60px;">
+  © 2026 NNS Ojo Alumni Association &nbsp;·&nbsp; <a href="index.html" style="color:#FFD700;">Back to Home</a>
+</footer>
+
+<script src="js/animations.js"></script>
+<script>
+  document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
+  document.querySelectorAll('.modal-close').forEach(b => b.addEventListener('click', () => b.closest('.modal-overlay').classList.remove('open')));
+
+  function submitJob(e) {
+    e.preventDefault();
+    document.getElementById('post-job-modal').classList.remove('open');
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:30px;right:30px;z-index:9999;background:#28a745;color:#fff;padding:14px 24px;border-radius:12px;font-size:0.875rem;font-weight:600;font-family:Inter,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,0.2);';
+    t.textContent = '✅ Job posted! It will appear after admin review.';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 4000);
+  }
+
+  document.getElementById('job-search').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.job-card').forEach(c => { c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+  });
+</script>
+</body>
+</html>

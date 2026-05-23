@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — NNS Ojo Alumni</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/portal.css" />
+  <style>
+    .admin-sidebar { background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%); }
+    .admin-sidebar .sidebar-logo { background: #dc3545; }
+    .admin-sidebar .sidebar-nav-item.active { background: rgba(220,53,69,0.15); color: #ff6b6b; border-color: rgba(220,53,69,0.3); }
+    .admin-sidebar .nav-section-label { color: rgba(255,255,255,0.25); }
+
+    .admin-badge { background: #dc3545; color: #fff; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 50px; margin-left: auto; }
+
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #6c757d; padding: 12px 16px; text-align: left; border-bottom: 2px solid #e9ecef; }
+    .data-table td { padding: 14px 16px; font-size: 0.875rem; color: #1a1a2e; border-bottom: 1px solid #f0f4f8; }
+    .data-table tr:hover td { background: #f8f9fa; }
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .status-pill { font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 50px; }
+    .status-active { background: rgba(40,167,69,0.12); color: #28a745; }
+    .status-pending { background: rgba(255,193,7,0.15); color: #856404; }
+    .status-suspended { background: rgba(220,53,69,0.1); color: #dc3545; }
+
+    .action-btns { display: flex; gap: 6px; }
+    .action-btn { padding: 5px 12px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+    .action-approve { background: rgba(40,167,69,0.1); color: #28a745; }
+    .action-approve:hover { background: #28a745; color: #fff; }
+    .action-reject { background: rgba(220,53,69,0.1); color: #dc3545; }
+    .action-reject:hover { background: #dc3545; color: #fff; }
+    .action-view { background: rgba(0,51,102,0.08); color: #003366; }
+    .action-view:hover { background: #003366; color: #FFD700; }
+
+    .chart-bar-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .chart-row { display: flex; align-items: center; gap: 12px; }
+    .chart-label { font-size: 0.78rem; color: #6c757d; width: 60px; flex-shrink: 0; }
+    .chart-bar-bg { flex: 1; height: 10px; background: #e9ecef; border-radius: 5px; overflow: hidden; }
+    .chart-bar-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #003366, #004080); }
+    .chart-val { font-size: 0.78rem; font-weight: 700; color: #003366; width: 40px; text-align: right; }
+
+    .announcement-form textarea { width: 100%; padding: 12px 16px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 0.875rem; font-family: 'Inter', sans-serif; resize: vertical; min-height: 80px; outline: none; }
+    .announcement-form textarea:focus { border-color: #003366; }
+    .announcement-form select, .announcement-form input { width: 100%; padding: 11px 14px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 0.875rem; font-family: 'Inter', sans-serif; outline: none; margin-bottom: 12px; background: #fff; }
+
+    .revenue-card { background: linear-gradient(135deg, #001a33, #003366); border-radius: 16px; padding: 24px; color: #fff; }
+    .revenue-card .r-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+    .revenue-card .r-amount { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: #FFD700; }
+    .revenue-card .r-change { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 6px; }
+    .revenue-card .r-change span { color: #28a745; font-weight: 600; }
+  </style>
+</head>
+<body class="portal-body">
+<div class="portal-layout">
+
+  <!-- ADMIN SIDEBAR -->
+  <aside class="sidebar admin-sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">🛡️</div>
+      <div class="sidebar-title"><strong>Admin Panel</strong>NNS Ojo Alumni</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">👨💼</div>
+      <div class="sidebar-user-info"><span>Admin User</span><span style="color:#dc3545;">SUPER ADMIN</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <a href="admin.html" class="sidebar-nav-item active"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">👥</span> Members <span class="admin-badge">12 new</span></a>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">💳</span> Payments</a>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">📅</span> Events</a>
+      <div class="nav-section-label">Content</div>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">📰</span> News Posts</a>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">💼</span> Job Board <span class="admin-badge">3 pending</span></a>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">🖼️</span> Gallery</a>
+      <div class="nav-section-label">Finance</div>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">💰</span> Dues Tracker</a>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">🙏</span> Donations</a>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">📈</span> Reports</a>
+      <div class="nav-section-label">System</div>
+      <a href="#" class="sidebar-nav-item"><span class="nav-icon">⚙️</span> Settings</a>
+      <a href="index.html" class="sidebar-nav-item"><span class="nav-icon">🌐</span> View Site</a>
+      <a href="login.html" class="sidebar-nav-item"><span class="nav-icon">🚪</span> Sign Out</a>
+    </nav>
+  </aside>
+
+  <main class="portal-main">
+    <div class="portal-topbar">
+      <div><h1>Admin Dashboard</h1><p>Wednesday, 15 January 2026 · Overview</p></div>
+      <div class="topbar-actions">
+        <button class="notif-btn">🔔<span class="notif-dot"></span></button>
+        <button class="btn btn-gold" style="padding:10px 20px;font-size:0.82rem;" onclick="document.getElementById('announce-modal').classList.add('open')">📢 Send Announcement</button>
+      </div>
+    </div>
+
+    <!-- Revenue Cards -->
+    <div class="dashboard-grid-3" style="margin-bottom:24px;">
+      <div class="revenue-card">
+        <div class="r-label">Total Dues Collected (2026)</div>
+        <div class="r-amount">₦4,820,000</div>
+        <div class="r-change">vs last year: <span>+18%</span></div>
+      </div>
+      <div class="revenue-card" style="background:linear-gradient(135deg,#0d1b2a,#1b3a5c);">
+        <div class="r-label">Total Donations (2026)</div>
+        <div class="r-amount">₦7,350,000</div>
+        <div class="r-change">vs last year: <span>+34%</span></div>
+      </div>
+      <div class="revenue-card" style="background:linear-gradient(135deg,#1a0a00,#3d1f00);">
+        <div class="r-label">Library Fund Progress</div>
+        <div class="r-amount" style="color:#FFD700;">60%</div>
+        <div class="r-change">₦9M of ₦15M target raised</div>
+      </div>
+    </div>
+
+    <!-- Mini Stats -->
+    <div class="dashboard-grid-3" style="margin-bottom:24px;">
+      <div class="mini-stat">
+        <div class="mini-stat-icon icon-navy">👥</div>
+        <div class="mini-stat-info"><span>Total Members</span><strong>4,812</strong></div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-icon icon-gold">⏳</div>
+        <div class="mini-stat-info"><span>Pending Approvals</span><strong>12</strong></div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-icon icon-green">✅</div>
+        <div class="mini-stat-info"><span>Dues Compliance</span><strong>68%</strong></div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid" style="margin-bottom:24px;">
+
+      <!-- Pending Members -->
+      <div class="portal-card">
+        <div class="portal-card-header">
+          <h3>⏳ Pending Member Approvals</h3>
+          <a href="#">View all 12</a>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr><th>Name</th><th>Set</th><th>Registered</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Adaeze Obi</strong><br><small style="color:#6c757d;">adaeze@email.com</small></td>
+                <td>2005</td><td>Jan 14</td>
+                <td><span class="status-pill status-pending">Pending</span></td>
+                <td><div class="action-btns"><button class="action-btn action-approve">✓ Approve</button><button class="action-btn action-reject">✕ Reject</button></div></td>
+              </tr>
+              <tr>
+                <td><strong>Chukwudi Eze</strong><br><small style="color:#6c757d;">chukwudi@email.com</small></td>
+                <td>1999</td><td>Jan 13</td>
+                <td><span class="status-pill status-pending">Pending</span></td>
+                <td><div class="action-btns"><button class="action-btn action-approve">✓ Approve</button><button class="action-btn action-reject">✕ Reject</button></div></td>
+              </tr>
+              <tr>
+                <td><strong>Fatima Bello</strong><br><small style="color:#6c757d;">fatima@email.com</small></td>
+                <td>2010</td><td>Jan 12</td>
+                <td><span class="status-pill status-pending">Pending</span></td>
+                <td><div class="action-btns"><button class="action-btn action-approve">✓ Approve</button><button class="action-btn action-reject">✕ Reject</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Dues by Set -->
+      <div class="portal-card">
+        <div class="portal-card-header"><h3>📊 2026 Dues by Set (Top 8)</h3><a href="#">Full report</a></div>
+        <div class="chart-bar-wrap">
+          <div class="chart-row"><span class="chart-label">Set '95</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:96%"></div></div><span class="chart-val">96%</span></div>
+          <div class="chart-row"><span class="chart-label">Set '00</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:91%"></div></div><span class="chart-val">91%</span></div>
+          <div class="chart-row"><span class="chart-label">Set '98</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:83%"></div></div><span class="chart-val">83%</span></div>
+          <div class="chart-row"><span class="chart-label">Set '03</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:78%"></div></div><span class="chart-val">78%</span></div>
+          <div class="chart-row"><span class="chart-label">Set '91</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:72%"></div></div><span class="chart-val">72%</span></div>
+          <div class="chart-row"><span class="chart-label">Set '05</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:65%"></div></div><span class="chart-val">65%</span></div>
+          <div class="chart-row"><span class="chart-label">Set '88</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:58%"></div></div><span class="chart-val">58%</span></div>
+          <div class="chart-row"><span class="chart-label">Set '10</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:44%"></div></div><span class="chart-val">44%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Payments -->
+    <div class="portal-card" style="margin-bottom:24px;">
+      <div class="portal-card-header"><h3>💳 Recent Payments</h3><a href="#">View all</a></div>
+      <div style="overflow-x:auto;">
+        <table class="data-table">
+          <thead>
+            <tr><th>Member</th><th>Set</th><th>Type</th><th>Amount</th><th>Date</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Emeka Okafor</strong></td><td>1998</td><td>Annual Dues</td><td style="font-weight:700;color:#28a745;">₦10,000</td><td>Jan 12, 2026</td><td><span class="status-pill status-active">Confirmed</span></td><td><button class="action-btn action-view">View</button></td></tr>
+            <tr><td><strong>Ngozi Eze</strong></td><td>2001</td><td>Donation — Library</td><td style="font-weight:700;color:#28a745;">₦50,000</td><td>Jan 11, 2026</td><td><span class="status-pill status-active">Confirmed</span></td><td><button class="action-btn action-view">View</button></td></tr>
+            <tr><td><strong>Tunde Adeyemi</strong></td><td>1995</td><td>Annual Dues</td><td style="font-weight:700;color:#28a745;">₦10,000</td><td>Jan 10, 2026</td><td><span class="status-pill status-active">Confirmed</span></td><td><button class="action-btn action-view">View</button></td></tr>
+            <tr><td><strong>Chioma Nwosu</strong></td><td>2003</td><td>Donation — Scholarship</td><td style="font-weight:700;color:#28a745;">₦25,000</td><td>Jan 9, 2026</td><td><span class="status-pill status-pending">Pending</span></td><td><button class="action-btn action-view">View</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- All Members Table -->
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h3>👥 All Members</h3>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="text" id="member-search" placeholder="Search..." style="padding:8px 14px;border:2px solid #e9ecef;border-radius:8px;font-size:0.82rem;outline:none;font-family:Inter,sans-serif;" />
+          <button class="btn btn-gold" style="padding:8px 16px;font-size:0.8rem;">+ Add Member</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="members-table">
+          <thead>
+            <tr><th>Name</th><th>Set</th><th>Location</th><th>Dues 2026</th><th>Joined</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Capt. Emeka Okafor</strong><br><small style="color:#6c757d;">emeka@email.com</small></td><td>1998</td><td>Lagos</td><td><span class="status-pill status-active">Paid</span></td><td>Mar 2020</td><td><span class="status-pill status-active">Active</span></td><td><div class="action-btns"><button class="action-btn action-view">View</button><button class="action-btn action-reject">Suspend</button></div></td></tr>
+            <tr><td><strong>Dr. Ngozi Eze</strong><br><small style="color:#6c757d;">ngozi@email.com</small></td><td>2001</td><td>Abuja</td><td><span class="status-pill status-active">Paid</span></td><td>Jan 2021</td><td><span class="status-pill status-active">Active</span></td><td><div class="action-btns"><button class="action-btn action-view">View</button><button class="action-btn action-reject">Suspend</button></div></td></tr>
+            <tr><td><strong>Engr. Tunde Adeyemi</strong><br><small style="color:#6c757d;">tunde@email.com</small></td><td>1995</td><td>Lagos</td><td><span class="status-pill status-active">Paid</span></td><td>Jun 2019</td><td><span class="status-pill status-active">Active</span></td><td><div class="action-btns"><button class="action-btn action-view">View</button><button class="action-btn action-reject">Suspend</button></div></td></tr>
+            <tr><td><strong>Barr. Chioma Nwosu</strong><br><small style="color:#6c757d;">chioma@email.com</small></td><td>2003</td><td>Enugu</td><td><span class="status-pill status-pending">Pending</span></td><td>Aug 2022</td><td><span class="status-pill status-active">Active</span></td><td><div class="action-btns"><button class="action-btn action-view">View</button><button class="action-btn action-reject">Suspend</button></div></td></tr>
+            <tr><td><strong>Mr. Chidi Okonkwo</strong><br><small style="color:#6c757d;">chidi@email.com</small></td><td>2000</td><td>London, UK</td><td><span class="status-pill status-pending">Pending</span></td><td>Nov 2023</td><td><span class="status-pill status-suspended">Suspended</span></td><td><div class="action-btns"><button class="action-btn action-approve">Restore</button><button class="action-btn action-view">View</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ANNOUNCEMENT MODAL -->
+<div class="modal-overlay" id="announce-modal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <h3>📢 Send Announcement</h3>
+      <button class="modal-close">✕</button>
+    </div>
+    <form class="announcement-form" onsubmit="sendAnnouncement(event)" style="display:flex;flex-direction:column;gap:12px;">
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Subject</label><input type="text" placeholder="Announcement subject" required /></div>
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Send To</label>
+        <select>
+          <option>All Members</option>
+          <option>Set 1988</option><option>Set 1989</option><option>Set 1990</option>
+          <option>Members with Unpaid Dues</option>
+          <option>Event Registrants</option>
+        </select>
+      </div>
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Channel</label>
+        <select>
+          <option>Email + In-App Notification</option>
+          <option>Email Only</option>
+          <option>In-App Only</option>
+        </select>
+      </div>
+      <div><label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Message</label><textarea placeholder="Write your announcement..." required></textarea></div>
+      <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;">Send Announcement →</button>
+    </form>
+  </div>
+</div>
+
+<script src="js/animations.js"></script>
+<script>
+  document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
+  document.querySelectorAll('.modal-close').forEach(b => b.addEventListener('click', () => b.closest('.modal-overlay').classList.remove('open')));
+
+  function sendAnnouncement(e) {
+    e.preventDefault();
+    document.getElementById('announce-modal').classList.remove('open');
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:30px;right:30px;z-index:9999;background:#28a745;color:#fff;padding:14px 24px;border-radius:12px;font-size:0.875rem;font-weight:600;font-family:Inter,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,0.2);';
+    t.textContent = '✅ Announcement sent to all members!';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 4000);
+  }
+
+  document.getElementById('member-search').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#members-table tbody tr').forEach(r => { r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+  });
+
+  document.querySelectorAll('.action-approve').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const row = this.closest('tr');
+      const statusCell = row.querySelector('.status-pill');
+      if (statusCell) { statusCell.className = 'status-pill status-active'; statusCell.textContent = 'Active'; }
+      this.closest('.action-btns').innerHTML = '<button class="action-btn action-view">View</button><button class="action-btn action-reject">Suspend</button>';
+    });
+  });
+</script>
+</body>
+</html>

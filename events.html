@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events — NNS Ojo Alumni</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, #001a33 0%, #003366 60%, #004080 100%);
+      padding: 140px 5% 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero h1 { color: #fff; font-size: clamp(2.2rem,5vw,3.5rem); margin-bottom: 16px; }
+    .page-hero p { color: rgba(255,255,255,0.65); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+    .events-page { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+
+    .events-filter {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: 2px solid #e9ecef;
+      background: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #003366;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #003366;
+      border-color: #003366;
+      color: #FFD700;
+    }
+
+    .events-big-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+      margin-bottom: 80px;
+    }
+
+    .event-big-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: all 0.35s ease;
+      border: 1px solid #e9ecef;
+    }
+    .event-big-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+
+    .event-big-banner {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+    }
+    .event-big-banner.reunion { background: linear-gradient(135deg, #003366, #004080); }
+    .event-big-banner.agm { background: linear-gradient(135deg, #001a33, #003366); }
+    .event-big-banner.fundraiser { background: linear-gradient(135deg, #0d1b2a, #1b3a5c); }
+    .event-big-banner.social { background: linear-gradient(135deg, #002244, #003d6b); }
+
+    .event-big-tag {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: #FFD700;
+      color: #001a33;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .event-big-date {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .event-big-date .day { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; line-height: 1; color: #FFD700; }
+    .event-big-date .month { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+    .event-big-body { padding: 24px; }
+    .event-big-body h3 { font-size: 1.1rem; color: #001a33; margin-bottom: 8px; }
+    .event-big-body p { font-size: 0.875rem; color: #6c757d; line-height: 1.6; margin-bottom: 16px; }
+
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .event-details span {
+      font-size: 0.8rem;
+      color: #6c757d;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .event-big-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid #e9ecef;
+    }
+    .event-spots { font-size: 0.78rem; color: #6c757d; }
+    .event-spots strong { color: #003366; }
+
+    /* Countdown */
+    .countdown-section {
+      background: linear-gradient(135deg, #001a33, #003366);
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .countdown-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .countdown-section h2 { color: #fff; font-size: 1.8rem; margin-bottom: 8px; }
+    .countdown-section p { color: rgba(255,255,255,0.6); margin-bottom: 30px; }
+
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .countdown-unit {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 16px;
+      padding: 20px 28px;
+      min-width: 90px;
+      backdrop-filter: blur(10px);
+    }
+    .countdown-unit .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #FFD700;
+      line-height: 1;
+    }
+    .countdown-unit .lbl {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .events-big-grid { grid-template-columns: 1fr; }
+      .countdown-section { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">⚓</div>
+    <div class="nav-title">
+      <span>NNS Ojo Alumni</span>
+      <span>Nigerian Navy School</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sets.html">Sets</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="portal.html" class="nav-cta">My Portal</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag" style="background:rgba(255,215,0,0.12); color:#FFD700; border-color:rgba(255,215,0,0.3);">2026 Calendar</div>
+  <h1 style="margin-top:16px;">Events & Reunions</h1>
+  <p>Stay connected through our events — reunions, AGMs, fundraisers, and social gatherings across Nigeria and beyond.</p>
+</div>
+
+<div class="events-page">
+
+  <!-- Countdown to next big event -->
+  <div class="countdown-section fade-up">
+    <h2>⏳ Next Major Event</h2>
+    <p>Set '99 Silver Jubilee Reunion — 14 February 2026, Eko Hotel Lagos</p>
+    <div class="countdown-timer">
+      <div class="countdown-unit"><div class="num" id="cd-days">00</div><div class="lbl">Days</div></div>
+      <div class="countdown-unit"><div class="num" id="cd-hours">00</div><div class="lbl">Hours</div></div>
+      <div class="countdown-unit"><div class="num" id="cd-mins">00</div><div class="lbl">Minutes</div></div>
+      <div class="countdown-unit"><div class="num" id="cd-secs">00</div><div class="lbl">Seconds</div></div>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <div class="events-filter">
+    <button class="filter-btn active">All Events</button>
+    <button class="filter-btn">Reunions</button>
+    <button class="filter-btn">AGM</button>
+    <button class="filter-btn">Fundraisers</button>
+    <button class="filter-btn">Social</button>
+    <button class="filter-btn">Webinars</button>
+  </div>
+
+  <!-- Events Grid -->
+  <div class="events-big-grid">
+
+    <div class="event-big-card fade-up">
+      <div class="event-big-banner reunion">
+        🎉
+        <div class="event-big-tag">Reunion</div>
+        <div class="event-big-date"><div class="day">14</div><div class="month">Feb 2026</div></div>
+      </div>
+      <div class="event-big-body">
+        <h3>Set '99 Silver Jubilee Reunion</h3>
+        <p>25 years on — a grand reunion dinner, awards night, and thanksgiving service for the class of 1999.</p>
+        <div class="event-details">
+          <span>📍 Eko Hotel & Suites, Victoria Island, Lagos</span>
+          <span>🕕 6:00 PM — 11:00 PM</span>
+          <span>👔 Black Tie / Naval Uniform</span>
+        </div>
+        <div class="event-big-footer">
+          <div class="event-spots">Slots: <strong>180 / 250</strong></div>
+          <a href="portal.html" class="btn btn-gold" style="padding:10px 22px; font-size:0.82rem;">Register →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-big-card fade-up">
+      <div class="event-big-banner agm">
+        🏛️
+        <div class="event-big-tag">AGM</div>
+        <div class="event-big-date"><div class="day">08</div><div class="month">Mar 2026</div></div>
+      </div>
+      <div class="event-big-body">
+        <h3>Annual General Meeting 2026</h3>
+        <p>Elections, financial reports, project updates, and unveiling of the new school library project.</p>
+        <div class="event-details">
+          <span>📍 NNS Ojo School Grounds, Lagos</span>
+          <span>🕙 10:00 AM — 4:00 PM</span>
+          <span>👥 All registered members</span>
+        </div>
+        <div class="event-big-footer">
+          <div class="event-spots">Open to <strong>All Members</strong></div>
+          <a href="portal.html" class="btn btn-gold" style="padding:10px 22px; font-size:0.82rem;">Register →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-big-card fade-up">
+      <div class="event-big-banner fundraiser">
+        ⛳
+        <div class="event-big-tag">Fundraiser</div>
+        <div class="event-big-date"><div class="day">21</div><div class="month">Jun 2026</div></div>
+      </div>
+      <div class="event-big-body">
+        <h3>3rd Annual Alumni Golf Tournament</h3>
+        <p>Networking, fun, and fundraising for the school scholarship fund. Limited to 80 participants.</p>
+        <div class="event-details">
+          <span>📍 Ikoyi Club 1938, Lagos</span>
+          <span>🕗 7:00 AM — 6:00 PM</span>
+          <span>💰 Entry: ₦50,000 per player</span>
+        </div>
+        <div class="event-big-footer">
+          <div class="event-spots">Slots: <strong>42 / 80</strong></div>
+          <a href="portal.html" class="btn btn-gold" style="padding:10px 22px; font-size:0.82rem;">Register →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-big-card fade-up">
+      <div class="event-big-banner social">
+        🎤
+        <div class="event-big-tag">Webinar</div>
+        <div class="event-big-date"><div class="day">15</div><div class="month">Apr 2026</div></div>
+      </div>
+      <div class="event-big-body">
+        <h3>Career Mentorship Webinar</h3>
+        <p>Senior alumni share career insights with younger sets. Topics: entrepreneurship, military careers, diaspora opportunities.</p>
+        <div class="event-details">
+          <span>💻 Online — Zoom</span>
+          <span>🕔 4:00 PM — 6:00 PM WAT</span>
+          <span>🆓 Free for all members</span>
+        </div>
+        <div class="event-big-footer">
+          <div class="event-spots">Registered: <strong>312</strong></div>
+          <a href="portal.html" class="btn btn-gold" style="padding:10px 22px; font-size:0.82rem;">Join Free →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-big-card fade-up">
+      <div class="event-big-banner reunion">
+        🥂
+        <div class="event-big-tag">Social</div>
+        <div class="event-big-date"><div class="day">12</div><div class="month">Jul 2026</div></div>
+      </div>
+      <div class="event-big-body">
+        <h3>Abuja Alumni Mixer</h3>
+        <p>An informal evening for all alumni based in Abuja and the FCT — networking, drinks, and good company.</p>
+        <div class="event-details">
+          <span>📍 Transcorp Hilton, Abuja</span>
+          <span>🕕 5:00 PM — 9:00 PM</span>
+          <span>💰 Entry: ₦5,000</span>
+        </div>
+        <div class="event-big-footer">
+          <div class="event-spots">Slots: <strong>60 / 120</strong></div>
+          <a href="portal.html" class="btn btn-gold" style="padding:10px 22px; font-size:0.82rem;">Register →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-big-card fade-up">
+      <div class="event-big-banner agm">
+        🎓
+        <div class="event-big-tag">Reunion</div>
+        <div class="event-big-date"><div class="day">20</div><div class="month">Sep 2026</div></div>
+      </div>
+      <div class="event-big-body">
+        <h3>Pioneer Set '88 — 37th Reunion</h3>
+        <p>Honouring the founding class of NNS Ojo — a school established in 1982. A special evening celebrating 37 years since the first set graduated.</p>
+        <div class="event-details">
+          <span>📍 Federal Palace Hotel, Lagos</span>
+          <span>🕕 6:00 PM — Midnight</span>
+          <span>👔 Smart Casual / Naval Uniform</span>
+        </div>
+        <div class="event-big-footer">
+          <div class="event-spots">Slots: <strong>25 / 60</strong></div>
+          <a href="portal.html" class="btn btn-gold" style="padding:10px 22px; font-size:0.82rem;">Register →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer style="background:#001a33; color:rgba(255,255,255,0.5); text-align:center; padding:30px; font-size:0.85rem;">
+  © 2026 NNS Ojo Alumni Association &nbsp;·&nbsp;
+  <a href="index.html" style="color:#FFD700;">Back to Home</a>
+</footer>
+
+<script src="js/animations.js"></script>
+<script>
+  // Countdown to Feb 14 2025
+  function updateCountdown() {
+    const target = new Date('2026-02-14T18:00:00');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '00';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
