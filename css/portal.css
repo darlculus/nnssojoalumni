@@ -796,10 +796,24 @@
 
 @media (max-width: 768px) {
   .sidebar { transform: translateX(-100%); }
-  .sidebar.open { transform: translateX(0); }
-  .portal-main { margin-left: 0; padding: 20px; }
+  .sidebar.open { transform: translateX(0); box-shadow: 10px 0 40px rgba(0,0,0,0.4); }
+  .portal-main { margin-left: 0; padding: 20px 16px; }
   .dashboard-grid-3 { grid-template-columns: 1fr; }
   .wallet-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
   .wallet-actions { width: 100%; }
   .wallet-btn { flex: 1; justify-content: center; }
+  .wallet-balance { font-size: 2rem; }
+  .portal-topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .portal-topbar h1 { font-size: 1.3rem; }
+  .topbar-actions { width: 100%; justify-content: space-between; }
+  .leaderboard-bar-wrap { width: 60px; }
+  .data-table th, .data-table td { padding: 10px 12px; font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+  .dashboard-grid-3 { grid-template-columns: 1fr; }
+  .wallet-card { padding: 22px 18px; }
+  .wallet-balance { font-size: 1.8rem; }
+  .profile-header { flex-direction: column; text-align: center; }
+  .profile-meta { justify-content: center; }
 }

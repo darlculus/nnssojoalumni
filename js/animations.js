@@ -6,19 +6,49 @@ if (navbar) {
   });
 }
 
-// ===== HAMBURGER MENU =====
+// ===== HAMBURGER + OVERLAY =====
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
-if (hamburger && navLinks) {
+
+// Inject overlay into DOM once
+let overlay = document.querySelector('.nav-overlay');
+if (!overlay && hamburger) {
+  overlay = document.createElement('div');
+  overlay.className = 'nav-overlay';
+  document.body.appendChild(overlay);
+}
+
+function openMenu() {
+  hamburger.classList.add('open');
+  navLinks.classList.add('open');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+  hamburger.classList.remove('open');
+  navLinks.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+if (hamburger) {
   hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    hamburger.classList.toggle('open');
-  });
-  // Close on link click
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => navLinks.classList.remove('open'));
+    hamburger.classList.contains('open') ? closeMenu() : openMenu();
   });
 }
+
+if (overlay) {
+  overlay.addEventListener('click', closeMenu);
+}
+
+// Close on nav link click
+if (navLinks) {
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+}
+
+// Close on Escape key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
 // ===== SCROLL ANIMATIONS =====
 const observer = new IntersectionObserver((entries) => {
@@ -57,11 +87,80 @@ const counterObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
 
 // ===== SETS FILTER =====
-const setPills = document.querySelectorAll('.set-pill');
-setPills.forEach(pill => {
+document.querySelectorAll('.set-pill').forEach(pill => {
   pill.addEventListener('click', () => {
-    setPills.forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.set-pill').forEach(p => p.classList.remove('active'));
     pill.classList.add('active');
-    // In production: filter members by set year via API
   });
 });
+
+// ===== SCROLL TO TOP — ANCHOR WITH PROGRESS RING =====
+(function () {
+  // Inject the SVG button
+  const btn = document.createElement('div');
+  btn.className = 'scroll-top';
+  btn.setAttribute('aria-label', 'Scroll to top');
+  btn.setAttribute('role', 'button');
+  btn.setAttribute('tabindex', '0');
+
+  // circumference of circle r=20 => 2*PI*20 ≈ 125.66
+  const C = 125.66;
+
+  btn.innerHTML = `
+    <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background circle -->
+      <circle class="ring-track" cx="26" cy="26" r="23"/>
+      <!-- Progress ring -->
+      <circle class="ring-progress" cx="26" cy="26" r="20"/>
+      <!-- Inner disc -->
+      <circle class="anchor-bg" cx="26" cy="26" r="18"/>
+      <!-- Anchor icon -->
+      <g class="anchor-icon" transform="translate(26,26)">
+        <!-- Ring at top -->
+        <circle cx="0" cy="-8" r="3.5" fill="none" stroke="#FFD700" stroke-width="1.8"/>
+        <!-- Vertical bar -->
+        <line x1="0" y1="-4.5" x2="0" y2="8" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- Horizontal bar -->
+        <line x1="-5" y1="-1" x2="5" y2="-1" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- Left curl -->
+        <path d="M-5,8 Q-9,8 -9,4.5 Q-9,1 -5,1" fill="none" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- Right curl -->
+        <path d="M5,8 Q9,8 9,4.5 Q9,1 5,1" fill="none" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- Up arrow -->
+        <polyline points="-3.5,-11 0,-15 3.5,-11" fill="none" stroke="#FFD700" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  `;
+
+  document.body.appendChild(btn);
+
+  const ring = btn.querySelector('.ring-progress');
+  ring.style.strokeDasharray = C;
+  ring.style.strokeDashoffset = C;
+
+  // Show/hide + update progress ring on scroll
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? scrollTop / docHeight : 0;
+
+    // Show after 300px
+    btn.classList.toggle('visible', scrollTop > 300);
+
+    // Update ring
+    ring.style.strokeDashoffset = C - pct * C;
+  }, { passive: true });
+
+  // Click to scroll top
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Keyboard support
+  btn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+})();

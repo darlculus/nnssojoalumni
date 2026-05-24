@@ -298,6 +298,12 @@
 
 @media (max-width: 600px) {
   .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions .btn { width: 100%; max-width: 280px; justify-content: center; }
   .hero-counter { display: none; }
   .slide-caption { display: none; }
+  .hero-title { font-size: clamp(2.2rem, 10vw, 3rem); }
+  .hero-subtitle { font-size: 0.95rem; }
+  .hero-badge { font-size: 0.7rem; padding: 6px 14px; }
+  .hero-controls { bottom: 28px; gap: 12px; }
+  .hero-arrow { width: 36px; height: 36px; font-size: 0.9rem; }
 }
