@@ -248,12 +248,10 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   height: 60px;
   padding: 0 10px;
-  filter: grayscale(100%) opacity(0.55);
-  transition: filter 0.35s ease, transform 0.35s ease;
+  transition: transform 0.35s ease;
 }
 
 .partner-item:hover {
-  filter: grayscale(0%) opacity(1);
   transform: scale(1.08);
 }
 
