@@ -23,7 +23,7 @@
     <li><a href="sets.html">Sets</a></li>
     <li><a href="events.html">Events</a></li>
     <li><a href="news.html">News</a></li>
-    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="connect.html">Connect</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="portal.html" class="nav-cta">My Portal</a></li>
@@ -63,7 +63,7 @@
       <span class="gold-text">Always Navy</span>
     </h1>
     <p class="hero-subtitle">
-      Connecting old students of Nigerian Navy School, Ojo — founded 1982, first set 1988.
+      Connecting old students of Nigerian Navy School, Ojo — founded 1982, first set 1986.
       One brotherhood. One legacy. Forever.
     </p>
     <div class="hero-actions">
@@ -106,7 +106,7 @@
     <div class="stat-card fade-up">
       <div class="stat-icon">🎓</div>
       <div class="stat-number" data-target="37" data-suffix="+">0+</div>
-      <div class="stat-label">Sets (1988–Present)</div>
+      <div class="stat-label">Sets (1986–Present)</div>
     </div>
     <div class="stat-card fade-up">
       <div class="stat-icon">👥</div>
@@ -172,7 +172,7 @@
         A Community Forged in<br><span style="color:#cc9900;">Discipline & Excellence</span>
       </h2>
       <p style="color:#6c757d; line-height:1.8; margin-bottom:16px; font-size:0.95rem;">
-        Nigerian Navy School, Ojo was founded in 1982 and has been shaping young minds ever since. Our alumni — from the pioneer set of 1988 to the present — span the military, government, business, medicine, law, and the arts, united by the values instilled within those hallowed walls.
+        Nigerian Navy School, Ojo was founded in 1982 and has been shaping young minds ever since. Our alumni — from the pioneer set of 1986 to the present — span the military, government, business, medicine, law, and the arts, united by the values instilled within those hallowed walls.
       </p>
       <p style="color:#6c757d; line-height:1.8; margin-bottom:30px; font-size:0.95rem;">
         This platform exists to keep that bond alive — to reconnect old friends, celebrate achievements, 
@@ -340,7 +340,7 @@
   <div class="section-header fade-up">
     <div class="section-tag">Sets Directory</div>
     <h2>Find Your Set</h2>
-    <p>Browse alumni by graduation year — from the pioneer class of 1988 to the present.</p>
+    <p>Browse alumni by graduation year — from the pioneer class of 1986 to the present.</p>
     <div class="section-divider"></div>
   </div>
   <div class="sets-scroll" id="sets-scroll">
@@ -411,10 +411,13 @@
   <h2 style="margin-top:16px;">Remembrance Wall</h2>
   <p>We honour the memory of our brothers and sisters who have gone ahead.</p>
   <div class="remembrance-cards">
-    <div class="remembrance-card">
-      <div class="r-emoji">🕯️</div>
-      <h4>Kalto Paul Kilyofas</h4>
-      <span>Set '05 · 1988–2012</span>
+    <div class="remembrance-card" style="background-image:url('assets/images/kalto.jpg');background-size:cover;background-position:center top;position:relative;overflow:hidden;transition:background-size 0.4s ease;" onmouseover="this.style.backgroundSize='120%'" onmouseout="this.style.backgroundSize='cover'">
+      <div style="position:absolute;inset:0;background:rgba(10,20,40,0.72);"></div>
+      <div style="position:relative;z-index:1;">
+        <div class="r-emoji">🕯️</div>
+        <h4>Kalto Paul Kilyofas</h4>
+        <span>Set '05 · 1988–2012</span>
+      </div>
     </div>
     <div class="remembrance-card">
       <div class="r-emoji">🕯️</div>
@@ -440,7 +443,7 @@
           <span>Nigerian Navy School</span>
         </div>
       </div>
-      <p>Nigerian Navy School, Ojo — founded 1982, first set 1988. One brotherhood, one legacy — forever.</p>
+      <p>Nigerian Navy School, Ojo — founded 1982, first set 1986. One brotherhood, one legacy — forever.</p>
       <div class="footer-socials">
         <div class="social-btn">𝕏</div>
         <div class="social-btn">f</div>
@@ -466,7 +469,7 @@
         <li><a href="portal.html">My Portal</a></li>
         <li><a href="portal.html">Pay Dues</a></li>
         <li><a href="portal.html">Donate</a></li>
-        <li><a href="jobs.html">Job Board</a></li>
+        <li><a href="connect.html">Connect</a></li>
         <li><a href="news.html">Newsletter</a></li>
       </ul>
     </div>
@@ -490,9 +493,9 @@
 <script src="js/animations.js"></script>
 <script src="js/carousel.js"></script>
 <script>
-  // Generate set pills 1988–2024
+  // Generate set pills 1986–2024
   const scroll = document.getElementById('sets-scroll');
-  for (let y = 2024; y >= 1988; y--) {
+  for (let y = 2024; y >= 1986; y--) {
     const pill = document.createElement('button');
     pill.className = 'set-pill' + (y === 1998 ? ' active' : '');
     pill.textContent = `Set '${String(y).slice(2)}`;

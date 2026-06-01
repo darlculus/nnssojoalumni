@@ -42,9 +42,16 @@ if (overlay) {
   overlay.addEventListener('click', closeMenu);
 }
 
-// Close on nav link click
+// Close on nav link click — let navigation happen, just clean up body state
 if (navLinks) {
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
 }
 
 // Close on Escape key
