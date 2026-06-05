@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connect — NNS Ojo Alumni</title>
+  <title>Connect — NNSS Ojo Alumni</title>
   <link rel="stylesheet" href="css/main.css" />
   <style>
     .page-hero { background: linear-gradient(135deg, #001a33 0%, #003366 60%, #004080 100%); padding: 140px 5% 80px; text-align: center; position: relative; overflow: hidden; }
@@ -60,14 +60,67 @@
     .btn-sm-outline { background: transparent; color: #003366; border: 2px solid #e9ecef; }
     .btn-sm-outline:hover { border-color: #003366; }
 
+    /* Tabs */
+    .connect-tabs { display: flex; gap: 0; margin-bottom: 36px; border-bottom: 2px solid #e9ecef; }
+    .connect-tab { padding: 13px 28px; font-size: 0.9rem; font-weight: 600; cursor: pointer; color: #6c757d; border: none; background: none; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.25s; font-family: 'Inter', sans-serif; }
+    .connect-tab.active { color: #003366; border-bottom-color: #003366; }
+    .connect-tab:hover:not(.active) { color: #003366; }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* Marketplace */
+    .market-toolbar { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; align-items: center; }
+    .market-toolbar input { flex: 1; min-width: 200px; padding: 13px 20px; border: 2px solid #e9ecef; border-radius: 50px; font-size: 0.9rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s; }
+    .market-toolbar input:focus { border-color: #003366; }
+    .market-toolbar select { padding: 13px 18px; border: 2px solid #e9ecef; border-radius: 50px; font-size: 0.875rem; font-family: 'Inter', sans-serif; outline: none; background: #fff; cursor: pointer; }
+    .btn-advertise { background: linear-gradient(135deg, #FFD700, #ffe566); color: #001a33; font-weight: 700; padding: 13px 24px; border-radius: 50px; border: none; cursor: pointer; font-size: 0.875rem; font-family: 'Inter', sans-serif; white-space: nowrap; box-shadow: 0 4px 15px rgba(255,215,0,0.35); transition: all 0.3s; }
+    .btn-advertise:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,215,0,0.5); }
+
+    .market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .market-card { background: #fff; border-radius: 16px; border: 2px solid #e9ecef; overflow: hidden; transition: all 0.3s; }
+    .market-card:hover { border-color: #003366; box-shadow: 0 8px 30px rgba(0,51,102,0.12); transform: translateY(-3px); }
+    .market-card.featured { border-color: #FFD700; }
+    .market-img { height: 180px; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: #e9ecef; }
+    .market-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .market-img img:first-child:last-child { grid-column: span 2; grid-row: span 2; }
+    .market-img img:first-child:nth-last-child(2), .market-img img:first-child:nth-last-child(2) ~ img { grid-row: span 2; }
+    .market-img img:first-child:nth-last-child(3) { grid-column: span 2; }
+    .market-badge { position: absolute; top: 10px; left: 10px; font-size: 0.65rem; font-weight: 700; padding: 4px 10px; border-radius: 50px; letter-spacing: 1px; text-transform: uppercase; }
+    .badge-featured { background: #FFD700; color: #001a33; }
+    .badge-service { background: #003366; color: #fff; }
+    .badge-product { background: #28a745; color: #fff; }
+    .market-body { padding: 18px; }
+    .market-body h3 { font-size: 0.95rem; color: #001a33; margin-bottom: 8px; }
+    .market-desc { font-size: 0.8rem; color: #6c757d; margin-bottom: 12px; line-height: 1.5; }
+    .market-footer { display: flex; align-items: center; justify-content: space-between; }
+    .market-price { font-size: 1rem; font-weight: 700; color: #003366; font-family: 'Playfair Display', serif; }
+    .btn-contact-seller { padding: 7px 16px; font-size: 0.75rem; border-radius: 50px; font-weight: 600; cursor: pointer; border: 2px solid #003366; background: transparent; color: #003366; transition: all 0.3s; font-family: 'Inter', sans-serif; }
+    .btn-contact-seller:hover { background: #003366; color: #fff; }
+
+    .market-cta-banner { background: linear-gradient(135deg, #001a33 0%, #003366 100%); border-radius: 16px; padding: 36px 32px; text-align: center; margin-bottom: 32px; }
+    .market-cta-banner h3 { color: #fff; font-size: 1.3rem; margin-bottom: 8px; }
+    .market-cta-banner p { color: rgba(255,255,255,0.65); font-size: 0.875rem; margin-bottom: 20px; }
+    .market-cta-banner .price-note { display: inline-block; background: rgba(255,215,0,0.15); color: #FFD700; border: 1px solid rgba(255,215,0,0.3); border-radius: 50px; padding: 5px 16px; font-size: 0.75rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 1px; }
+
     /* No results */
     .no-results { text-align: center; padding: 60px 20px; color: #6c757d; display: none; }
     .no-results .nr-icon { font-size: 3rem; margin-bottom: 12px; }
 
+    /* Ad Modal */
+    .ad-plan { border: 2px solid #e9ecef; border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.25s; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; }
+    .ad-plan:hover, .ad-plan.selected { border-color: #003366; background: rgba(0,51,102,0.04); }
+    .ad-plan-icon { font-size: 1.5rem; }
+    .ad-plan-info h4 { font-size: 0.9rem; color: #001a33; margin-bottom: 2px; }
+    .ad-plan-info p { font-size: 0.75rem; color: #6c757d; }
+    .ad-plan-price { margin-left: auto; font-weight: 700; color: #003366; font-size: 0.95rem; }
+
+    @media (max-width: 1024px) { .market-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .market-grid { grid-template-columns: 1fr; } .market-cta-banner { padding: 24px 20px; } .connect-tab { padding: 11px 16px; font-size: 0.82rem; } }
+
     /* Modal */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; overflow-y: auto; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal { background: #fff; border-radius: 20px; padding: 32px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); transform: translateY(20px); transition: transform 0.3s; }
+    .modal { background: #fff; border-radius: 20px; padding: 32px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.25); transform: translateY(20px); transition: transform 0.3s; margin: auto; }
     .modal-overlay.open .modal { transform: translateY(0); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
     .modal-header h3 { font-size: 1.2rem; color: #001a33; }
@@ -83,8 +136,8 @@
 
 <nav class="navbar">
   <div class="nav-brand">
-    <div class="nav-logo"><img src="assets/images/logo.png" alt="NNS Ojo Alumni Logo" /></div>
-    <div class="nav-title"><span>NNS Ojo Alumni</span><span>Nigerian Navy School</span></div>
+    <div class="nav-logo"><img src="assets/images/logo.png" alt="NNSS Ojo Alumni Logo" /></div>
+    <div class="nav-title"><span>NNSS Ojo Alumni</span><span>Nigerian Navy Secondary School</span></div>
   </div>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
@@ -103,7 +156,7 @@
 <div class="page-hero">
   <div class="section-tag" style="background:rgba(255,215,0,0.12);color:#FFD700;border-color:rgba(255,215,0,0.3);">Alumni Network</div>
   <h1 style="margin-top:16px;">Connect with Alumni</h1>
-  <p>Find old classmates, build professional relationships, and grow within the NNS Ojo family.</p>
+  <p>Find old classmates, build professional relationships, and grow within the NNSS Ojo family.</p>
 </div>
 
 <div class="connect-page">
@@ -115,6 +168,15 @@
     <div class="c-stat"><div class="num">12</div><div class="lbl">Countries</div></div>
     <div class="c-stat"><div class="num">340</div><div class="lbl">Online This Month</div></div>
   </div>
+
+  <!-- Tabs -->
+  <div class="connect-tabs">
+    <button class="connect-tab active" onclick="switchTab('professionals')">👥 Professionals</button>
+    <button class="connect-tab" onclick="switchTab('marketplace')">🛒 Marketplace</button>
+  </div>
+
+  <!-- PROFESSIONALS TAB -->
+  <div id="tab-professionals" class="tab-pane active">
 
   <!-- Search -->
   <div class="connect-search">
@@ -292,6 +354,203 @@
     </div>
 
   </div>
+
+  </div><!-- /tab-professionals -->
+
+  <!-- MARKETPLACE TAB -->
+  <div id="tab-marketplace" class="tab-pane">
+
+    <!-- CTA Banner -->
+    <div class="market-cta-banner fade-up">
+      <h3>📢 Advertise Your Goods & Services</h3>
+      <p>Reach over 2,400 alumni and their networks. List your business, products, or professional services here.</p>
+      <div class="price-note">Starting from ₦5,000 / month</div><br/>
+      <button class="btn-advertise" onclick="openAdModal()">+ Post an Advert</button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="market-toolbar">
+      <input type="text" id="market-search" placeholder="🔍 Search listings..." oninput="filterMarket()" />
+      <select id="market-category" onchange="filterMarket()">
+        <option value="">All Categories</option>
+        <option value="Service">Services</option>
+        <option value="Product">Products</option>
+      </select>
+      <button class="btn-advertise" onclick="openAdModal()">+ Post an Advert</button>
+    </div>
+
+    <!-- Listings Grid -->
+    <div class="market-grid" id="market-grid">
+
+      <div class="market-card featured fade-up" data-cat="Service">
+        <div class="market-img">
+          <span class="market-badge badge-featured">★ Featured</span>
+          <span class="market-badge badge-service" style="left:auto;right:10px;">Service</span>
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=80" alt="Legal" />
+          <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80" alt="Legal 2" />
+          <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80" alt="Legal 3" />
+          <img src="https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?w=400&q=80" alt="Legal 4" />
+        </div>
+        <div class="market-body">
+          <h3>Legal Consultancy & Corporate Law</h3>
+          <p class="market-desc">Expert legal services for businesses and individuals. Corporate structuring, contracts, dispute resolution.</p>
+          <div class="market-footer">
+            <span class="market-price">₦50,000 / hr</span>
+            <button class="btn-contact-seller" onclick="openMessage('Legal Consultant')">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="market-card fade-up" data-cat="Service">
+        <div class="market-img">
+          <span class="market-badge badge-service">Service</span>
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&q=80" alt="Web Dev" />
+          <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80" alt="Web Dev 2" />
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&q=80" alt="Web Dev 3" />
+          <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=400&q=80" alt="Web Dev 4" />
+        </div>
+        <div class="market-body">
+          <h3>Web & App Development</h3>
+          <p class="market-desc">Full-stack web and mobile app development. From landing pages to enterprise platforms.</p>
+          <div class="market-footer">
+            <span class="market-price">From ₦150,000</span>
+            <button class="btn-contact-seller" onclick="openMessage('Web Developer')">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="market-card featured fade-up" data-cat="Product">
+        <div class="market-img">
+          <span class="market-badge badge-featured">★ Featured</span>
+          <span class="market-badge badge-product" style="left:auto;right:10px;">Product</span>
+          <img src="https://images.unsplash.com/photo-1590735213920-68192a487bc2?w=400&q=80" alt="Ankara" />
+          <img src="https://images.unsplash.com/photo-1614093302611-8efc4a879d34?w=400&q=80" alt="Ankara 2" />
+          <img src="https://images.unsplash.com/photo-1631233862800-ad679d9a34a5?w=400&q=80" alt="Ankara 3" />
+          <img src="https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=400&q=80" alt="Ankara 4" />
+        </div>
+        <div class="market-body">
+          <h3>Premium Ankara & Traditional Wear</h3>
+          <p class="market-desc">Bespoke African prints and traditional attire. Custom designs for events, reunions, and ceremonies.</p>
+          <div class="market-footer">
+            <span class="market-price">From ₦35,000</span>
+            <button class="btn-contact-seller" onclick="openMessage('Ankara Seller')">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="market-card fade-up" data-cat="Service">
+        <div class="market-img">
+          <span class="market-badge badge-service">Service</span>
+          <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&q=80" alt="Engineering" />
+          <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&q=80" alt="Engineering 2" />
+          <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400&q=80" alt="Engineering 3" />
+          <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=400&q=80" alt="Engineering 4" />
+        </div>
+        <div class="market-body">
+          <h3>Structural & Civil Engineering</h3>
+          <p class="market-desc">Structural assessments, building design, and project management for residential and commercial builds.</p>
+          <div class="market-footer">
+            <span class="market-price">₦80,000 / project</span>
+            <button class="btn-contact-seller" onclick="openMessage('Civil Engineer')">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="market-card fade-up" data-cat="Product">
+        <div class="market-img">
+          <span class="market-badge badge-product">Product</span>
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80" alt="Real Estate" />
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80" alt="Real Estate 2" />
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80" alt="Real Estate 3" />
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80" alt="Real Estate 4" />
+        </div>
+        <div class="market-body">
+          <h3>Real Estate — Port Harcourt Properties</h3>
+          <p class="market-desc">Residential and commercial properties in Port Harcourt. Verified listings, flexible payment plans.</p>
+          <div class="market-footer">
+            <span class="market-price">From ₦12M</span>
+            <button class="btn-contact-seller" onclick="openMessage('Real Estate Agent')">Contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="market-card fade-up" data-cat="Service">
+        <div class="market-img">
+          <span class="market-badge badge-service">Service</span>
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Finance" />
+          <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&q=80" alt="Finance 2" />
+          <img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400&q=80" alt="Finance 3" />
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80" alt="Finance 4" />
+        </div>
+        <div class="market-body">
+          <h3>Financial Planning & Investment Advisory</h3>
+          <p class="market-desc">Personal finance, investment portfolio management, and risk analysis for individuals and SMEs.</p>
+          <div class="market-footer">
+            <span class="market-price">₦30,000 / session</span>
+            <button class="btn-contact-seller" onclick="openMessage('Financial Advisor')">Contact</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /market-grid -->
+    <div class="no-results" id="no-market-results">
+      <div class="nr-icon">🛒</div>
+      <p>No listings match your search.</p>
+    </div>
+
+  </div><!-- /tab-marketplace -->
+
+</div>
+
+<!-- Ad / Advertise Modal -->
+<div class="modal-overlay" id="ad-modal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <h3>📢 Post an Advert</h3>
+      <button class="modal-close" onclick="closeAdModal()">✕</button>
+    </div>
+    <form onsubmit="submitAd(event)" style="display:flex;flex-direction:column;gap:14px;">
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Title</label>
+        <input type="text" placeholder="e.g. Catering Services for Events" required style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;" />
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Category</label>
+        <select required style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;background:#fff;">
+          <option value="">Select a category</option>
+          <option>Service</option>
+          <option>Product</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Description</label>
+        <textarea placeholder="Briefly describe what you're offering..." required style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;min-height:90px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:6px;">Price / Rate</label>
+        <input type="text" placeholder="e.g. ₦20,000 / session or From ₦5,000" required style="width:100%;padding:12px 16px;border:2px solid #e9ecef;border-radius:10px;font-size:0.875rem;font-family:Inter,sans-serif;outline:none;" />
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:#001a33;display:block;margin-bottom:10px;">Advertising Plan</label>
+        <div class="ad-plan selected" onclick="selectPlan(this)">
+          <span class="ad-plan-icon">🥉</span>
+          <div class="ad-plan-info"><h4>Basic</h4><p>Standard listing · 30 days</p></div>
+          <span class="ad-plan-price">₦5,000</span>
+        </div>
+        <div class="ad-plan" onclick="selectPlan(this)">
+          <span class="ad-plan-icon">🥈</span>
+          <div class="ad-plan-info"><h4>Standard</h4><p>Highlighted listing · 30 days</p></div>
+          <span class="ad-plan-price">₦12,000</span>
+        </div>
+        <div class="ad-plan" onclick="selectPlan(this)">
+          <span class="ad-plan-icon">🥇</span>
+          <div class="ad-plan-info"><h4>Featured</h4><p>★ Featured badge + top placement · 30 days</p></div>
+          <span class="ad-plan-price">₦25,000</span>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;">Proceed to Payment →</button>
+    </form>
+  </div>
 </div>
 
 <!-- Message Modal -->
@@ -320,7 +579,7 @@
 </div>
 
 <footer style="background:#001a33;color:rgba(255,255,255,0.5);text-align:center;padding:30px;font-size:0.85rem;margin-top:60px;">
-  © 2026 NNS Ojo Alumni Association &nbsp;·&nbsp; <a href="index.html" style="color:#FFD700;">Back to Home</a>
+  © 2026 NNSS Ojo Alumni Association &nbsp;·&nbsp; <a href="index.html" style="color:#FFD700;">Back to Home</a>
 </footer>
 
 <script src="js/animations.js"></script>
@@ -375,12 +634,60 @@
     if (e.target === document.getElementById('message-modal')) closeModal();
   });
 
+  document.getElementById('ad-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('ad-modal')) closeAdModal();
+  });
+
   function sendMessage(e) {
     e.preventDefault();
     closeModal();
+    showToast('✅ Message sent successfully!');
+  }
+
+  // Tabs
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.connect-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // Marketplace filter
+  function filterMarket() {
+    const q = document.getElementById('market-search').value.toLowerCase();
+    const cat = document.getElementById('market-category').value;
+    let visible = 0;
+    document.querySelectorAll('.market-card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const cardCat = card.dataset.cat;
+      const show = (!q || text.includes(q)) && (!cat || cardCat === cat);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    document.getElementById('no-market-results').style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  // Ad modal
+  function openAdModal() {
+    document.getElementById('ad-modal').classList.add('open');
+  }
+  function closeAdModal() {
+    document.getElementById('ad-modal').classList.remove('open');
+  }
+  function selectPlan(el) {
+    document.querySelectorAll('.ad-plan').forEach(p => p.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function submitAd(e) {
+    e.preventDefault();
+    closeAdModal();
+    showToast('🎉 Ad submitted! You will be redirected to payment shortly.');
+  }
+
+  function showToast(msg) {
     const toast = document.createElement('div');
     toast.style.cssText = 'position:fixed;bottom:30px;right:30px;z-index:9999;background:#28a745;color:#fff;padding:14px 24px;border-radius:12px;font-size:0.875rem;font-weight:600;font-family:Inter,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,0.2);';
-    toast.textContent = '✅ Message sent successfully!';
+    toast.textContent = msg;
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 4000);
   }
