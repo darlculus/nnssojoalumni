@@ -384,5 +384,11 @@
 </div>
 
 <script src="js/portal.js"></script>
+<script>
+  // Portal login guard
+  if (!sessionStorage.getItem('alumni-auth')) {
+    window.location.replace('login.html');
+  }
+</script>
 </body>
 </html>

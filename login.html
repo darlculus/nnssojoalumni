@@ -223,6 +223,8 @@
 
   function handleLogin(e) {
     e.preventDefault();
+    sessionStorage.setItem('alumni-auth', '1');
+    sessionStorage.setItem('wm-dismissed', '1');
     window.location.href = 'portal.html';
   }
 
@@ -231,7 +233,15 @@
     const pw = document.getElementById('reg-pw').value;
     const pw2 = document.getElementById('reg-pw2').value;
     if (pw !== pw2) { alert('Passwords do not match.'); return; }
+    sessionStorage.setItem('alumni-auth', '1');
+    sessionStorage.setItem('wm-dismissed', '1');
     window.location.href = 'portal.html';
+  }
+
+  // Auto-open register tab if redirected from welcome modal
+  if (window.location.hash === '#register' || sessionStorage.getItem('wm-register')) {
+    sessionStorage.removeItem('wm-register');
+    switchTab('register');
   }
 </script>
 </body>

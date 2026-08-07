@@ -1,3 +1,62 @@
+// ===== PRELOADER =====
+(function () {
+  const preloader = document.createElement('div');
+  preloader.id = 'preloader';
+  preloader.innerHTML = `
+    <div class="pre-inner">
+      <svg class="pre-anchor" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <circle class="pre-ring" cx="40" cy="40" r="36"/>
+        <g transform="translate(40,40)">
+          <circle cx="0" cy="-12" r="5" fill="none" stroke="#FFD700" stroke-width="2.5"/>
+          <line x1="0" y1="-7" x2="0" y2="14" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="-8" y1="-1" x2="8" y2="-1" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M-8,14 Q-14,14 -14,8 Q-14,2 -8,2" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M8,14 Q14,14 14,8 Q14,2 8,2" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="pre-waves">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="pre-text">NNSS OJO ALUMNI</div>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, #001a33 0%, #003366 60%, #004080 100%);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #preloader.hide { opacity: 0; visibility: hidden; }
+    .pre-inner { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+    .pre-anchor { width: 90px; height: 90px; animation: pre-bob 1.6s ease-in-out infinite; filter: drop-shadow(0 0 18px rgba(255,215,0,0.5)); }
+    .pre-ring { fill: rgba(255,255,255,0.06); stroke: rgba(255,215,0,0.25); stroke-width: 2; }
+    @keyframes pre-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .pre-waves { display: flex; gap: 8px; align-items: flex-end; height: 28px; }
+    .pre-waves span {
+      display: block; width: 5px; border-radius: 3px;
+      background: linear-gradient(to top, #FFD700, rgba(255,215,0,0.3));
+      animation: pre-wave 1.1s ease-in-out infinite;
+    }
+    .pre-waves span:nth-child(1){ height:14px; animation-delay:0s; }
+    .pre-waves span:nth-child(2){ height:22px; animation-delay:0.18s; }
+    .pre-waves span:nth-child(3){ height:14px; animation-delay:0.36s; }
+    @keyframes pre-wave { 0%,100%{transform:scaleY(0.5);opacity:0.5} 50%{transform:scaleY(1);opacity:1} }
+    .pre-text {
+      font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 4px; color: rgba(255,255,255,0.45); text-transform: uppercase;
+    }
+  `;
+  document.head.appendChild(style);
+  document.body.appendChild(preloader);
+
+  window.addEventListener('load', () => {
+    setTimeout(() => preloader.classList.add('hide'), 300);
+  });
+})();
+
 // ===== NAVBAR SCROLL =====
 const navbar = document.querySelector('.navbar');
 if (navbar) {
