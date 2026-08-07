@@ -14,7 +14,7 @@
   position:fixed; inset:0; z-index:5000;
   background:rgba(0,10,26,0.82); backdrop-filter:blur(8px);
   display:flex; align-items:center; justify-content:center; padding:20px;
-  opacity:0; transition:opacity 0.5s ease;
+  opacity:0; pointer-events:none; transition:opacity 0.5s ease;
 ">
   <div style="
     background:linear-gradient(160deg,#001a33 0%,#002a50 60%,#003366 100%);
@@ -541,6 +541,7 @@
     const box = document.getElementById('welcome-box');
     setTimeout(() => {
       modal.style.opacity = '1';
+      modal.style.pointerEvents = 'all';
       box.style.transform = 'translateY(0)';
     }, 800);
   })();
@@ -548,6 +549,7 @@
   function dismissWelcome() {
     const modal = document.getElementById('welcome-modal');
     modal.style.opacity = '0';
+    modal.style.pointerEvents = 'none';
     setTimeout(() => modal.style.display = 'none', 500);
     sessionStorage.setItem('wm-dismissed', '1');
   }
