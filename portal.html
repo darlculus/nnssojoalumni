@@ -7,7 +7,11 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/portal.css" />
 </head>
-<body class="portal-body">
+<body class="portal-body" style="visibility:hidden">
+<script>
+  if (!sessionStorage.getItem('alumni-auth')) window.location.replace('login.html');
+  else document.body.style.visibility = '';
+</script>
 
 <div class="portal-layout">
 
@@ -384,11 +388,5 @@
 </div>
 
 <script src="js/portal.js"></script>
-<script>
-  // Portal login guard
-  if (!sessionStorage.getItem('alumni-auth')) {
-    window.location.replace('login.html');
-  }
-</script>
 </body>
 </html>
