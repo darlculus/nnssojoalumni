@@ -223,7 +223,11 @@
 
   function handleLogin(e) {
     e.preventDefault();
+    // TODO (backend): replace with API call, store returned user object
+    const email = e.target.querySelector('input[type="email"]').value;
+    const name = email.split('@')[0]; // placeholder until backend returns real name
     sessionStorage.setItem('alumni-auth', '1');
+    sessionStorage.setItem('alumni-user', JSON.stringify({ name, email, set: '', firstName: name }));
     sessionStorage.setItem('wm-dismissed', '1');
     window.location.href = 'portal.html';
   }
@@ -233,7 +237,13 @@
     const pw = document.getElementById('reg-pw').value;
     const pw2 = document.getElementById('reg-pw2').value;
     if (pw !== pw2) { alert('Passwords do not match.'); return; }
+    // TODO (backend): replace with API call, store returned user object
+    const firstName = e.target.querySelector('input[type="text"]').value.trim();
+    const lastName = e.target.querySelectorAll('input[type="text"]')[1].value.trim();
+    const email = e.target.querySelector('input[type="email"]').value.trim();
+    const set = document.getElementById('reg-set').value;
     sessionStorage.setItem('alumni-auth', '1');
+    sessionStorage.setItem('alumni-user', JSON.stringify({ firstName, name: firstName + ' ' + lastName, email, set }));
     sessionStorage.setItem('wm-dismissed', '1');
     window.location.href = 'portal.html';
   }

@@ -11,6 +11,8 @@
 <script>
   if (!sessionStorage.getItem('alumni-auth')) window.location.replace('login.html');
   else document.body.style.visibility = '';
+  // TODO (backend): replace sessionStorage read with decoded JWT / session API call
+  var _u = JSON.parse(sessionStorage.getItem('alumni-user') || '{"firstName":"Member","name":"Member","set":""}');
 </script>
 
 <div class="portal-layout">
@@ -26,10 +28,10 @@
     </div>
 
     <div class="sidebar-user">
-      <div class="sidebar-avatar">👨✈️</div>
+      <div class="sidebar-avatar" id="sb-avatar">👤</div>
       <div class="sidebar-user-info">
-        <span>Capt. Emeka Okafor</span>
-        <span>SET '98</span>
+        <span id="sb-name">Member</span>
+        <span id="sb-set">—</span>
       </div>
     </div>
 
@@ -50,8 +52,8 @@
       </a>
 
       <div class="nav-section-label">Community</div>
-      <a href="sets.html" class="sidebar-nav-item">
-        <span class="nav-icon">🎓</span> My Set (Set '98)
+      <a href="sets.html" class="sidebar-nav-item" id="sb-set-link">
+        <span class="nav-icon">🎓</span> My Set
       </a>
       <a href="connect.html" class="sidebar-nav-item">
         <span class="nav-icon">💼</span> Connect
@@ -68,7 +70,7 @@
       <a href="profile.html" class="sidebar-nav-item">
         <span class="nav-icon">⚙️</span> Settings
       </a>
-      <a href="login.html" class="sidebar-nav-item">
+      <a href="#" onclick="signOut()" class="sidebar-nav-item">
         <span class="nav-icon">🚪</span> Sign Out
       </a>
     </nav>
@@ -80,8 +82,8 @@
     <!-- Topbar -->
     <div class="portal-topbar">
       <div>
-        <h1>Good morning, Emeka 👋</h1>
-        <p>Wednesday, 15 January 2026 &nbsp;·&nbsp; Set 1998</p>
+        <h1 id="topbar-greeting">Welcome 👋</h1>
+        <p id="topbar-meta">—</p>
       </div>
       <div class="topbar-actions">
         <button class="notif-btn" title="Notifications">
@@ -388,5 +390,37 @@
 </div>
 
 <script src="js/portal.js"></script>
+<script>
+  // TODO (backend): remove this block and populate from API response instead
+  (function () {
+    var u = _u;
+    var firstName = u.firstName || u.name.split(' ')[0] || 'Member';
+    var fullName = u.name || 'Member';
+    var setYear = u.set ? 'Set ' + u.set : 'Set —';
+    var setShort = u.set ? "'" + String(u.set).slice(2) : '—';
+
+    // Greeting by time of day
+    var hr = new Date().getHours();
+    var greeting = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('topbar-greeting').textContent = greeting + ', ' + firstName + ' 👋';
+
+    // Date line
+    var dateStr = new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('topbar-meta').innerHTML = dateStr + (u.set ? ' &nbsp;·&nbsp; ' + setYear : '');
+
+    // Sidebar
+    document.getElementById('sb-name').textContent = fullName;
+    document.getElementById('sb-set').textContent = u.set ? setYear : '—';
+    if (u.set) document.getElementById('sb-set-link').innerHTML = '<span class="nav-icon">🎓</span> My Set (' + setYear + ')';
+  })();
+
+  function signOut() {
+    // TODO (backend): also call logout API endpoint here
+    sessionStorage.removeItem('alumni-auth');
+    sessionStorage.removeItem('alumni-user');
+    sessionStorage.removeItem('wm-dismissed');
+    window.location.href = 'index.html';
+  }
+</script>
 </body>
 </html>
