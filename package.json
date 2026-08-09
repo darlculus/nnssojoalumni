@@ -2,7 +2,6 @@
   "name": "nnss-ojo-alumni",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "engines": { "node": "20.x" },
   "dependencies": {
     "bcryptjs": "^2.4.3",

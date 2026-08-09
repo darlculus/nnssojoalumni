@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
-import { connectDB } from '../../lib/db.js';
-import User from '../../lib/user.js';
+const jwt = require('jsonwebtoken');
+const { connectDB } = require('../../lib/db');
+const User = require('../../lib/user');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -23,4 +23,4 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(401).json({ error: 'Invalid or expired token.' });
   }
-}
+};
