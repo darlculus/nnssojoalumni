@@ -221,31 +221,54 @@
     fill.style.background = colors[score - 1] || '#e9ecef';
   }
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
-    // TODO (backend): replace with API call, store returned user object
-    const email = e.target.querySelector('input[type="email"]').value;
-    const name = email.split('@')[0]; // placeholder until backend returns real name
-    sessionStorage.setItem('alumni-auth', '1');
-    sessionStorage.setItem('alumni-user', JSON.stringify({ name, email, set: '', firstName: name }));
-    sessionStorage.setItem('wm-dismissed', '1');
-    window.location.href = 'portal.html';
+    const btn = e.target.querySelector('button[type="submit"]');
+    const email = e.target.querySelector('input[type="email"]').value.trim();
+    const password = document.getElementById('login-pw').value;
+    btn.textContent = 'Signing in…'; btn.disabled = true;
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error || 'Login failed.'); btn.textContent = 'Sign In →'; btn.disabled = false; return; }
+      localStorage.setItem('alumni-token', data.token);
+      localStorage.setItem('alumni-user', JSON.stringify(data.user));
+      sessionStorage.setItem('wm-dismissed', '1');
+      window.location.href = 'portal.html';
+    } catch { alert('Network error. Please try again.'); btn.textContent = 'Sign In →'; btn.disabled = false; }
   }
 
-  function handleRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault();
     const pw = document.getElementById('reg-pw').value;
     const pw2 = document.getElementById('reg-pw2').value;
     if (pw !== pw2) { alert('Passwords do not match.'); return; }
-    // TODO (backend): replace with API call, store returned user object
-    const firstName = e.target.querySelector('input[type="text"]').value.trim();
-    const lastName = e.target.querySelectorAll('input[type="text"]')[1].value.trim();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const inputs = e.target.querySelectorAll('input[type="text"]');
+    const firstName = inputs[0].value.trim();
+    const lastName = inputs[1].value.trim();
     const email = e.target.querySelector('input[type="email"]').value.trim();
-    const set = document.getElementById('reg-set').value;
-    sessionStorage.setItem('alumni-auth', '1');
-    sessionStorage.setItem('alumni-user', JSON.stringify({ firstName, name: firstName + ' ' + lastName, email, set }));
-    sessionStorage.setItem('wm-dismissed', '1');
-    window.location.href = 'portal.html';
+    const phone = e.target.querySelector('input[type="tel"]').value.trim();
+    const setYear = parseInt(document.getElementById('reg-set').value) || null;
+    const location = e.target.querySelector('select:last-of-type') ? e.target.querySelectorAll('select')[1].value : '';
+    btn.textContent = 'Creating account…'; btn.disabled = true;
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, email, phone, setYear, location, password: pw })
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error || 'Registration failed.'); btn.textContent = 'Create Account →'; btn.disabled = false; return; }
+      localStorage.setItem('alumni-token', data.token);
+      localStorage.setItem('alumni-user', JSON.stringify(data.user));
+      sessionStorage.setItem('wm-dismissed', '1');
+      window.location.href = 'portal.html';
+    } catch { alert('Network error. Please try again.'); btn.textContent = 'Create Account →'; btn.disabled = false; }
   }
 
   // Auto-open register tab if redirected from welcome modal
