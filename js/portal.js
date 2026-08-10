@@ -62,16 +62,14 @@ if (duesForm) {
     const year = duesForm.querySelector('#dues-year').value;
     const amount = duesForm.querySelector('#dues-amount').value;
     if (!year || !amount) return;
-
-    // Paystack integration placeholder
+    const user = JSON.parse(localStorage.getItem('alumni-user') || '{}');
     initiatePaystack({
-      email: currentUser.email,
-      amount: parseFloat(amount) * 100, // kobo
+      email: user.email || '',
+      amount: parseFloat(amount) * 100,
       metadata: { type: 'dues', year },
-      callback: (ref) => {
+      callback: () => {
         closeModal('dues-modal');
         showToast(`✅ Dues payment of ₦${Number(amount).toLocaleString()} successful!`, 'success');
-        updateWalletDisplay();
       }
     });
   });
@@ -85,14 +83,13 @@ if (donateForm) {
     const selected = donateForm.querySelector('.account-option.selected');
     const amount = donateForm.querySelector('#donate-amount').value;
     if (!selected || !amount) return;
-
     const accountName = selected.querySelector('.account-option-info span').textContent;
-
+    const user = JSON.parse(localStorage.getItem('alumni-user') || '{}');
     initiatePaystack({
-      email: currentUser.email,
+      email: user.email || '',
       amount: parseFloat(amount) * 100,
       metadata: { type: 'donation', account: accountName },
-      callback: (ref) => {
+      callback: () => {
         closeModal('donate-modal');
         showToast(`🙏 Donation of ₦${Number(amount).toLocaleString()} to ${accountName} received!`, 'success');
       }
@@ -100,15 +97,11 @@ if (donateForm) {
   });
 }
 
-// ===== PAYSTACK STUB (replace with real Paystack SDK) =====
+// ===== PAYSTACK STUB (replace with real Paystack SDK when ready) =====
 function initiatePaystack({ email, amount, metadata, callback }) {
-  // In production: use PaystackPop.setup({ key: 'pk_live_...', email, amount, ... })
-  console.log('Paystack payment:', { email, amount, metadata });
-  // Simulate success for demo
+  console.log('Paystack stub:', { email, amount, metadata });
   setTimeout(() => callback('demo_ref_' + Date.now()), 800);
 }
-
-// ===== TOAST NOTIFICATION =====
 function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
@@ -124,21 +117,6 @@ function showToast(message, type = 'success') {
   `;
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 4000);
-}
-
-// ===== MOCK CURRENT USER =====
-const currentUser = {
-  name: 'Capt. Emeka Okafor',
-  email: 'emeka.okafor@example.com',
-  set: '1998',
-  walletBalance: 45000
-};
-
-function updateWalletDisplay() {
-  const balEl = document.querySelector('.wallet-balance');
-  if (balEl) {
-    balEl.innerHTML = `<span class="currency">₦</span>${currentUser.walletBalance.toLocaleString()}`;
-  }
 }
 
 // ===== SIDEBAR ACTIVE STATE =====

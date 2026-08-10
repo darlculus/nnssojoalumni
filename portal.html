@@ -9,9 +9,9 @@
 </head>
 <body class="portal-body" style="visibility:hidden">
 <script>
-  const _token = localStorage.getItem('alumni-token');
-  const _u = JSON.parse(localStorage.getItem('alumni-user') || 'null');
-  if (!_token || !_u) window.location.replace('login.html');
+  window._token = localStorage.getItem('alumni-token');
+  window._u = JSON.parse(localStorage.getItem('alumni-user') || 'null');
+  if (!window._token || !window._u) window.location.replace('login.html');
   else document.body.style.visibility = '';
 </script>
 
@@ -289,11 +289,9 @@
 
 <script src="js/portal.js"></script>
 <script>
-  const _token = localStorage.getItem('alumni-token');
-
   // ===== POPULATE STATIC USER INFO =====
   (function () {
-    const u = _u;
+    const u = window._u;
     if (!u) return;
     const firstName = u.firstName || 'Member';
     const fullName = (u.firstName + ' ' + (u.lastName || '')).trim();
@@ -312,7 +310,7 @@
   async function loadDashboard() {
     try {
       const res = await fetch('/api/dashboard', {
-        headers: { 'Authorization': 'Bearer ' + _token }
+        headers: { 'Authorization': 'Bearer ' + window._token }
       });
       if (res.status === 401) { signOut(); return; }
       const data = await res.json();
@@ -414,7 +412,7 @@
     document.querySelector('.notif-dot').style.display = 'none';
     await fetch('/api/notifications', {
       method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + _token }
+      headers: { 'Authorization': 'Bearer ' + window._token }
     });
   }
 
