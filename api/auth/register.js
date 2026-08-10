@@ -43,6 +43,6 @@ module.exports = async function handler(req, res) {
     });
   } catch (err) {
     console.error('Register error:', err);
-    return res.status(500).json({ error: 'Server error. Please try again.' });
+    return res.status(500).json({ error: err.message || 'Server error. Please try again.' });
   }
 };
