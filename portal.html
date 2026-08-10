@@ -99,7 +99,7 @@
       <div class="wallet-top">
         <div>
           <div class="wallet-label">Wallet Balance</div>
-          <div class="wallet-balance"><span class="currency">₦</span>45,000</div>
+          <div class="wallet-balance"><span class="currency">₦</span><span id="wallet-balance">0</span></div>
         </div>
         <div class="wallet-chip"></div>
       </div>
@@ -107,20 +107,16 @@
         <div>
           <div class="wallet-info">
             <span>Member ID</span>
-            <strong>NNSS-OJO-98-0042</strong>
+            <strong id="member-id">—</strong>
           </div>
         </div>
         <div class="wallet-info" style="text-align:center;">
           <span>Dues Status</span>
-          <strong style="color:#FFD700;">2025 ✓ Paid</strong>
+          <strong id="dues-status" style="color:#FFD700;">—</strong>
         </div>
         <div class="wallet-actions">
-          <button class="wallet-btn wallet-btn-dues" onclick="openModal('dues-modal')">
-            💳 Pay Dues
-          </button>
-          <button class="wallet-btn wallet-btn-donate" onclick="openModal('donate-modal')">
-            🙏 Donate
-          </button>
+          <button class="wallet-btn wallet-btn-dues" onclick="openModal('dues-modal')">💳 Pay Dues</button>
+          <button class="wallet-btn wallet-btn-donate" onclick="openModal('donate-modal')">🙏 Donate</button>
         </div>
       </div>
     </div>
@@ -131,127 +127,43 @@
         <div class="mini-stat-icon icon-gold">💰</div>
         <div class="mini-stat-info">
           <span>Total Donated</span>
-          <strong>₦120,000</strong>
+          <strong id="stat-donated">₦0</strong>
         </div>
       </div>
       <div class="mini-stat">
         <div class="mini-stat-icon icon-navy">📅</div>
         <div class="mini-stat-info">
           <span>Events Attended</span>
-          <strong>7</strong>
+          <strong id="stat-events">0</strong>
         </div>
       </div>
       <div class="mini-stat">
         <div class="mini-stat-icon icon-green">✅</div>
         <div class="mini-stat-info">
           <span>Dues Paid (Years)</span>
-          <strong>5 / 6</strong>
+          <strong id="stat-dues">0</strong>
         </div>
       </div>
     </div>
 
     <!-- ===== ACTIVITY + DUES ===== -->
     <div class="dashboard-grid">
-
-      <!-- Activity Feed -->
       <div class="portal-card">
         <div class="portal-card-header">
           <h3>Recent Activity</h3>
           <a href="#">View all</a>
         </div>
-        <div class="activity-list">
-          <div class="activity-item">
-            <div class="activity-icon paid">✅</div>
-            <div class="activity-info">
-              <span>Annual Dues 2025 Paid</span>
-              <small>12 Jan 2026 · Paystack</small>
-            </div>
-            <div class="activity-amount debit">-₦10,000</div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-icon donated">🙏</div>
-            <div class="activity-info">
-              <span>Donation — Library Fund</span>
-              <small>05 Jan 2026 · Paystack</small>
-            </div>
-            <div class="activity-amount debit">-₦25,000</div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-icon event">📅</div>
-            <div class="activity-info">
-              <span>Registered: AGM 2026</span>
-              <small>02 Jan 2026</small>
-            </div>
-            <div class="activity-amount" style="color:#003366;">Free</div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-icon paid">💳</div>
-            <div class="activity-info">
-              <span>Wallet Top-up</span>
-              <small>28 Dec 2025 · Bank Transfer</small>
-            </div>
-            <div class="activity-amount credit">+₦50,000</div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-icon donated">🙏</div>
-            <div class="activity-info">
-              <span>Donation — Scholarship Fund</span>
-              <small>15 Dec 2025 · Paystack</small>
-            </div>
-            <div class="activity-amount debit">-₦20,000</div>
-          </div>
+        <div class="activity-list" id="activity-list">
+          <div class="activity-item" style="justify-content:center; color:#6c757d; font-size:0.85rem;">No activity yet</div>
         </div>
       </div>
-
-      <!-- Dues Status -->
       <div class="portal-card">
         <div class="portal-card-header">
           <h3>Dues History</h3>
           <a href="#" onclick="openModal('dues-modal'); return false;">Pay Now</a>
         </div>
-        <div class="dues-list">
-          <div class="dues-item">
-            <div>
-              <div class="dues-year">2026</div>
-              <div class="dues-amount">₦10,000</div>
-            </div>
-            <span class="dues-status pending">Pending</span>
-          </div>
-          <div class="dues-item">
-            <div>
-              <div class="dues-year">2024</div>
-              <div class="dues-amount">₦10,000</div>
-            </div>
-            <span class="dues-status paid">Paid ✓</span>
-          </div>
-          <div class="dues-item">
-            <div>
-              <div class="dues-year">2023</div>
-              <div class="dues-amount">₦8,000</div>
-            </div>
-            <span class="dues-status paid">Paid ✓</span>
-          </div>
-          <div class="dues-item">
-            <div>
-              <div class="dues-year">2022</div>
-              <div class="dues-amount">₦8,000</div>
-            </div>
-            <span class="dues-status paid">Paid ✓</span>
-          </div>
-          <div class="dues-item">
-            <div>
-              <div class="dues-year">2021</div>
-              <div class="dues-amount">₦5,000</div>
-            </div>
-            <span class="dues-status overdue">Overdue</span>
-          </div>
-          <div class="dues-item">
-            <div>
-              <div class="dues-year">2020</div>
-              <div class="dues-amount">₦5,000</div>
-            </div>
-            <span class="dues-status paid">Paid ✓</span>
-          </div>
+        <div class="dues-list" id="dues-list">
+          <div style="text-align:center; color:#6c757d; font-size:0.85rem; padding:20px;">Loading…</div>
         </div>
       </div>
     </div>
@@ -262,41 +174,27 @@
         <h3>🏆 Set Dues Compliance Leaderboard</h3>
         <a href="#">Full Rankings</a>
       </div>
-      <div class="leaderboard-list">
-        <div class="leaderboard-item">
-          <div class="leaderboard-rank rank-1">1</div>
-          <div class="leaderboard-set">Set '95</div>
-          <div class="leaderboard-bar-wrap"><div class="leaderboard-bar" style="width:96%"></div></div>
-          <div class="leaderboard-pct">96%</div>
-        </div>
-        <div class="leaderboard-item">
-          <div class="leaderboard-rank rank-2">2</div>
-          <div class="leaderboard-set">Set '2000</div>
-          <div class="leaderboard-bar-wrap"><div class="leaderboard-bar" style="width:91%"></div></div>
-          <div class="leaderboard-pct">91%</div>
-        </div>
-        <div class="leaderboard-item">
-          <div class="leaderboard-rank rank-3">3</div>
-          <div class="leaderboard-set">Set '98 ← You</div>
-          <div class="leaderboard-bar-wrap"><div class="leaderboard-bar" style="width:83%"></div></div>
-          <div class="leaderboard-pct">83%</div>
-        </div>
-        <div class="leaderboard-item">
-          <div class="leaderboard-rank rank-other">4</div>
-          <div class="leaderboard-set">Set '03</div>
-          <div class="leaderboard-bar-wrap"><div class="leaderboard-bar" style="width:78%"></div></div>
-          <div class="leaderboard-pct">78%</div>
-        </div>
-        <div class="leaderboard-item">
-          <div class="leaderboard-rank rank-other">5</div>
-          <div class="leaderboard-set">Set '91</div>
-          <div class="leaderboard-bar-wrap"><div class="leaderboard-bar" style="width:72%"></div></div>
-          <div class="leaderboard-pct">72%</div>
-        </div>
+      <div class="leaderboard-list" id="leaderboard-list">
+        <div style="text-align:center; color:#6c757d; font-size:0.85rem; padding:20px;">Loading…</div>
       </div>
     </div>
 
   </main>
+</div>
+
+<!-- ===== NOTIFICATIONS PANEL ===== -->
+<div id="notif-panel" style="
+  position:fixed; top:70px; right:24px; width:320px; max-height:420px; overflow-y:auto;
+  background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  border:1px solid #e9ecef; z-index:2000; display:none; flex-direction:column;
+">
+  <div style="padding:16px 20px; border-bottom:1px solid #e9ecef; display:flex; justify-content:space-between; align-items:center;">
+    <strong style="font-size:0.9rem; color:#001a33;">Notifications</strong>
+    <button onclick="markNotifsRead()" style="font-size:0.75rem; color:#cc9900; background:none; border:none; cursor:pointer; font-weight:600;">Mark all read</button>
+  </div>
+  <div id="notif-list" style="padding:8px 0;">
+    <div style="padding:16px 20px; color:#6c757d; font-size:0.85rem;">No notifications</div>
+  </div>
 </div>
 
 <!-- ===== PAY DUES MODAL ===== -->
@@ -391,30 +289,136 @@
 
 <script src="js/portal.js"></script>
 <script>
+  const _token = localStorage.getItem('alumni-token');
+
+  // ===== POPULATE STATIC USER INFO =====
   (function () {
     const u = _u;
     if (!u) return;
     const firstName = u.firstName || 'Member';
     const fullName = (u.firstName + ' ' + (u.lastName || '')).trim();
     const setYear = u.setYear ? 'Set ' + u.setYear : null;
-
     const hr = new Date().getHours();
     const greeting = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
     document.getElementById('topbar-greeting').textContent = greeting + ', ' + firstName + ' 👋';
-
     const dateStr = new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
     document.getElementById('topbar-meta').innerHTML = dateStr + (setYear ? ' &nbsp;·&nbsp; ' + setYear : '');
-
     document.getElementById('sb-name').textContent = fullName || 'Member';
     document.getElementById('sb-set').textContent = setYear || '—';
     if (setYear) document.getElementById('sb-set-link').innerHTML = '<span class="nav-icon">🎓</span> My Set (' + setYear + ')';
-
-    if (u.memberId) {
-      const midEl = document.querySelector('.wallet-info strong');
-      if (midEl) midEl.textContent = u.memberId;
-    }
   })();
 
+  // ===== LOAD DASHBOARD DATA =====
+  async function loadDashboard() {
+    try {
+      const res = await fetch('/api/dashboard', {
+        headers: { 'Authorization': 'Bearer ' + _token }
+      });
+      if (res.status === 401) { signOut(); return; }
+      const data = await res.json();
+      if (!res.ok) return;
+
+      const u = data.user;
+
+      // Update localStorage with fresh data
+      localStorage.setItem('alumni-user', JSON.stringify(u));
+
+      // Wallet
+      document.getElementById('wallet-balance').textContent = u.walletBalance.toLocaleString();
+      document.getElementById('member-id').textContent = u.memberId || 'Pending';
+
+      // Dues status
+      const currentYear = new Date().getFullYear();
+      const paidThisYear = u.duesPaidYears.includes(currentYear);
+      document.getElementById('dues-status').textContent = paidThisYear ? currentYear + ' ✓ Paid' : currentYear + ' — Unpaid';
+      document.getElementById('dues-status').style.color = paidThisYear ? '#FFD700' : '#dc3545';
+
+      // Mini stats
+      document.getElementById('stat-donated').textContent = '₦' + u.totalDonated.toLocaleString();
+      document.getElementById('stat-events').textContent = u.eventsAttended;
+      document.getElementById('stat-dues').textContent = u.duesPaidYears.length;
+
+      // Dues history
+      const duesList = document.getElementById('dues-list');
+      if (data.duesHistory.length) {
+        duesList.innerHTML = data.duesHistory.map(d => `
+          <div class="dues-item">
+            <div>
+              <div class="dues-year">${d.year}</div>
+              <div class="dues-amount">₦${d.amount.toLocaleString()}</div>
+            </div>
+            <span class="dues-status ${d.paid ? 'paid' : 'pending'}">${d.paid ? 'Paid ✓' : 'Pending'}</span>
+          </div>`).join('');
+      } else {
+        duesList.innerHTML = '<div style="text-align:center;color:#6c757d;font-size:0.85rem;padding:20px;">No dues history yet</div>';
+      }
+
+      // Activity feed
+      const activityList = document.getElementById('activity-list');
+      const icons = { dues: '💳', donation: '🙏', topup: '💰', event: '📅' };
+      if (data.transactions.length) {
+        activityList.innerHTML = data.transactions.map(t => `
+          <div class="activity-item">
+            <div class="activity-icon ${t.type}">${icons[t.type] || '📌'}</div>
+            <div class="activity-info">
+              <span>${t.label}</span>
+              <small>${new Date(t.createdAt).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}</small>
+            </div>
+            <div class="activity-amount ${t.direction}">${t.direction === 'debit' ? '-' : '+'}₦${t.amount.toLocaleString()}</div>
+          </div>`).join('');
+      } else {
+        activityList.innerHTML = '<div class="activity-item" style="justify-content:center;color:#6c757d;font-size:0.85rem;">No activity yet</div>';
+      }
+
+      // Leaderboard — placeholder until we have enough users
+      document.getElementById('leaderboard-list').innerHTML = '<div style="text-align:center;color:#6c757d;font-size:0.85rem;padding:20px;">Leaderboard available once more members join</div>';
+
+      // Notifications bell
+      const notifBtn = document.querySelector('.notif-btn');
+      const notifDot = notifBtn.querySelector('.notif-dot');
+      notifDot.style.display = data.unreadCount > 0 ? 'block' : 'none';
+
+      const notifList = document.getElementById('notif-list');
+      if (data.notifications.length) {
+        notifList.innerHTML = data.notifications.map(n => `
+          <div style="padding:12px 20px; border-bottom:1px solid #f0f0f0; ${n.read ? 'opacity:0.6' : ''}">
+            <div style="font-size:0.85rem; color:#001a33; margin-bottom:3px;">${n.message}</div>
+            <div style="font-size:0.75rem; color:#6c757d;">${new Date(n.createdAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
+          </div>`).join('');
+      }
+
+    } catch (err) {
+      console.error('Dashboard load error:', err);
+    }
+  }
+
+  loadDashboard();
+
+  // ===== NOTIFICATION BELL TOGGLE =====
+  document.querySelector('.notif-btn').addEventListener('click', function () {
+    const panel = document.getElementById('notif-panel');
+    const isOpen = panel.style.display === 'flex';
+    panel.style.display = isOpen ? 'none' : 'flex';
+    panel.style.flexDirection = 'column';
+    if (!isOpen) markNotifsRead();
+  });
+
+  document.addEventListener('click', function (e) {
+    const panel = document.getElementById('notif-panel');
+    if (!panel.contains(e.target) && !e.target.closest('.notif-btn')) {
+      panel.style.display = 'none';
+    }
+  });
+
+  async function markNotifsRead() {
+    document.querySelector('.notif-dot').style.display = 'none';
+    await fetch('/api/notifications', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + _token }
+    });
+  }
+
+  // ===== SIGN OUT =====
   function signOut() {
     localStorage.removeItem('alumni-token');
     localStorage.removeItem('alumni-user');
